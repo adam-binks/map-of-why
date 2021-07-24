@@ -1,7 +1,59 @@
 .node {
+    display: flex;
     background-color: lightgray;
-    width: 200px;
+    max-width: 200px;
+    min-width: 80px;
     padding: 5px;
     border-radius: 4px;
     border: 2px solid grey;
+    text-align: left;
+}
+
+.node input[type=checkbox] {
+    margin: 2px;
+    zoom: 2;
+}
+
+.node span {
+    margin: 4px;
+}
+
+.valueIcon {
+    font-size: large;
+    height: fit-content;
+}
+
+.emojiPicker {
+    z-index: 10;
+    position: absolute;
+    left: 20px;
+}
+
+.addNodeButton {
+    display: none;
+    position: absolute;
+    right: 5px;
+    transform: translateY(-50%);
+    top: 50%;
+    z-index: 1;
+    padding: 1px;
+}
+
+.deleteNodeButton {
+    display: none;
+    position: absolute;
+    right: 25px;
+    transform: translateY(-50%);
+    top: 50%;
+    z-index: 1;
+    padding: 1px;
+}
+
+.nodeWrapper:hover .addNodeButton,
+.nodeWrapper:hover .deleteNodeButton {
+    display: inline-block;
+}
+
+.nodeWrapper {
+    position: relative;
 }

@@ -17,7 +17,7 @@
     padding: 0;
 }
 
-.tree li {
+.tree li.treeElement {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -27,7 +27,7 @@
     padding-left: 2vw;
 }
 
-.tree li::before {
+.tree li.treeElement::before {
     content: '';
     position: absolute;
     left: 0;
@@ -36,35 +36,35 @@
     width: 2vw;
 }
 
-.tree li::after {
+.tree li.treeElement::after {
     content: '';
     position: absolute;
     left: 0;
     border-left: 1px solid;
 }
 
-.tree li:last-of-type:not(:only-of-type)::after {
+.tree li.treeElement:last-of-type:not(:only-of-type)::after {
     height: 50%;
     top: 0;
 }
 
-.tree li:first-of-type:not(:only-of-type)::after {
+.tree li.treeElement:first-of-type:not(:only-of-type)::after {
     height: 50%;
     bottom: 0;
 }
 
-.tree li:not(:first-of-type):not(:last-of-type)::after {
+.tree li.treeElement:not(:first-of-type):not(:last-of-type)::after {
     height: 100%;
 }
 
-.tree ul,
-.tree ol {
+.tree ul.treeElement,
+.tree ol.treeElement {
     padding-left: 2vw;
     position: relative;
 }
 
-.tree ul::before,
-.tree ol::before {
+.tree ul.treeElement::before,
+.tree ol.treeElement::before {
     content: '';
     position: absolute;
     left: 0;
@@ -73,28 +73,11 @@
     width: 2vw;
 }
 
-.tree span {
-    border: 1px solid;
-    text-align: center;
-    padding: 0.33em 0.66em;
-}
-
-.tree>li {
+.tree>li.treeElement {
     padding-left: 0;
 }
 
-.tree>li::before,
-.tree>li::after {
+.tree>li.treeElement::before,
+.tree>li.treeElement::after {
     display: none;
-}
-
-ol,
-ul {
-    counter-reset: section;
-}
-
-li span::before {
-    counter-increment: section;
-    content: counters(section, ".") " ";
-    font-family: monospace;
 }

@@ -1,0 +1,7 @@
+.node {
+    background-color: lightgray;
+    width: 200px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid grey;
+}

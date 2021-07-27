@@ -1,201 +1,203 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 // values are incomplete - to be used with spread operator
-const getDefaultNode = () => {return {
-    label: "New task",
-    completed: false,
-    isValue: false,
-    valueIcon: '⭐',
-    displayedChildren: [],
-}}
+const getDefaultNode = () => {
+    return {
+        label: "New task",
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        displayedChildren: [],
+    }
+}
 
 // one deep line
-const initialState =  [
+const initialState = [
     {
-      label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      completed: false,
-      isValue: true,
-      valueIcon: '⭐',
-      id: 'A1',
-      parents: []
+        label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        completed: false,
+        isValue: true,
+        valueIcon: '⭐',
+        id: 'A1',
+        parents: []
     },
     {
-      label: 'B1',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'B1',
-      parents: [
-        'A1'
-      ]
+        label: 'B1',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'B1',
+        parents: [
+            'A1'
+        ]
     },
     {
-      label: 'B2',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'B2',
-      parents: [
-        'A1'
-      ]
+        label: 'B2',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'B2',
+        parents: [
+            'A1'
+        ]
     },
     {
-      label: 'B2.5',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'B2.5',
-      parents: [
-        'A1'
-      ]
+        label: 'B2.5',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'B2.5',
+        parents: [
+            'A1'
+        ]
     },
     {
-      label: 'C1',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'C1',
-      parents: [
-        'B2'
-      ]
+        label: 'C1',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'C1',
+        parents: [
+            'B2'
+        ]
     },
     {
-      label: 'C2',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'C2',
-      parents: [
-        'B2'
-      ]
+        label: 'C2',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'C2',
+        parents: [
+            'B2'
+        ]
     },
     {
-      label: 'Excepteur sint occaecat cupidatat non proident',
-      completed: false,
-      isValue: true,
-      valueIcon: '⭐',
-      id: 'B3',
-      parents: [
-        'A2'
-      ]
+        label: 'Excepteur sint occaecat cupidatat non proident',
+        completed: false,
+        isValue: true,
+        valueIcon: '⭐',
+        id: 'B3',
+        parents: [
+            'A2'
+        ]
     },
     {
-      label: 'A2',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'A2',
-      parents: []
+        label: 'A2',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'A2',
+        parents: []
     },
     {
-      label: 'A3',
-      completed: false,
-      isValue: true,
-      valueIcon: '💪',
-      id: 'A3',
-      parents: []
+        label: 'A3',
+        completed: false,
+        isValue: true,
+        valueIcon: '💪',
+        id: 'A3',
+        parents: []
     },
     {
-      label: 'New task',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'gx_7OQAPZHjb-huSw1pdR',
-      parents: [
-        'C1'
-      ]
+        label: 'New task',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'gx_7OQAPZHjb-huSw1pdR',
+        parents: [
+            'C1'
+        ]
     },
     {
-      label: 'New task',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'LFQn8mAS7BpE-ba4o4JBq',
-      parents: [
-        'gx_7OQAPZHjb-huSw1pdR'
-      ]
+        label: 'New task',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'LFQn8mAS7BpE-ba4o4JBq',
+        parents: [
+            'gx_7OQAPZHjb-huSw1pdR'
+        ]
     },
     {
-      label: 'New task',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'FgJTY7PSqLsKE8uTQui5l',
-      parents: [
-        'LFQn8mAS7BpE-ba4o4JBq'
-      ]
+        label: 'New task',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'FgJTY7PSqLsKE8uTQui5l',
+        parents: [
+            'LFQn8mAS7BpE-ba4o4JBq'
+        ]
     },
     {
-      label: 'New task',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'PfTbGkdu500xS9hkptuas',
-      parents: [
-        'FgJTY7PSqLsKE8uTQui5l'
-      ]
+        label: 'New task',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'PfTbGkdu500xS9hkptuas',
+        parents: [
+            'FgJTY7PSqLsKE8uTQui5l'
+        ]
     },
     {
-      label: 'New task',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'yuk8zP_3wZvEtSZqBHYLL',
-      parents: [
-        'PfTbGkdu500xS9hkptuas'
-      ]
+        label: 'New task',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'yuk8zP_3wZvEtSZqBHYLL',
+        parents: [
+            'PfTbGkdu500xS9hkptuas'
+        ]
     },
     {
-      label: 'New task',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'pSSQYYvdZUhcAFytjC0X6',
-      parents: [
-        'B3'
-      ]
+        label: 'New task',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'pSSQYYvdZUhcAFytjC0X6',
+        parents: [
+            'B3'
+        ]
     },
     {
-      label: 'New task',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'sKTXd5_gyP0faNbGHkzyz',
-      parents: [
-        'pSSQYYvdZUhcAFytjC0X6'
-      ]
+        label: 'New task',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'sKTXd5_gyP0faNbGHkzyz',
+        parents: [
+            'pSSQYYvdZUhcAFytjC0X6'
+        ]
     },
     {
-      label: 'New task',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: '2R8t1hpgC7s5AsGpF9YKs',
-      parents: [
-        'LFQn8mAS7BpE-ba4o4JBq'
-      ]
+        label: 'New task',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: '2R8t1hpgC7s5AsGpF9YKs',
+        parents: [
+            'LFQn8mAS7BpE-ba4o4JBq'
+        ]
     },
     {
-      label: 'New task',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'LUW0Xe2Gi7NsXlB3UAAIi',
-      parents: [
-        'sKTXd5_gyP0faNbGHkzyz'
-      ]
+        label: 'New task',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'LUW0Xe2Gi7NsXlB3UAAIi',
+        parents: [
+            'sKTXd5_gyP0faNbGHkzyz'
+        ]
     },
     {
-      label: 'New task',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      id: 'axu9o0XSJLGuhzLEWN_9V',
-      parents: [
-        'LUW0Xe2Gi7NsXlB3UAAIi'
-      ]
+        label: 'New task',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        id: 'axu9o0XSJLGuhzLEWN_9V',
+        parents: [
+            'LUW0Xe2Gi7NsXlB3UAAIi'
+        ]
     }
-  ]
+]
 
 // handwritten one
 // const initialState = [
@@ -268,6 +270,24 @@ const updateNodeAttribute = (state, id, attribute, value) => {
     }
 }
 
+const removeNodeFromParentsDisplayedChildren = (nodes, node) => {
+    if (node && node.parents.length > 0) {
+        const displayedChildren = getNode(nodes, node.parents[0]).displayedChildren
+        const index = displayedChildren.indexOf(node.id)
+        displayedChildren.splice(index, 1)
+    }
+}
+
+const isDisplayedDescendantOf = (nodes, descendant, ancestor) => {
+    if (ancestor === descendant) {
+        return true
+    }
+    if (!descendant.parents.length) {
+        return false
+    }
+    return isDisplayedDescendantOf(nodes, ancestor, getNode(nodes, descendant.parents[0]))
+}
+
 const initialiseDisplayedChildren = (nodes) => {
     nodes.forEach(node => {
         // need to store this so we can reorder them
@@ -302,14 +322,31 @@ export const nodeSlice = createSlice({
                 // remove this node
                 state.splice(state.findIndex((n) => n.id === node.id), 1)
 
-                // remove from parent's list of displayedChildren
-                if (node.parents.length > 0) {
-                    const displayedChildren = getNode(state, node.parents[0]).displayedChildren
-                    displayedChildren.splice(displayedChildren.indexOf(node.id), 1)
-                }
+                removeNodeFromParentsDisplayedChildren(state, node)
             }
 
             deleteRecursive(action.payload.id)
+        },
+
+        nodeReordered: (state, action) => {
+            const { id, newParentId, newIndex } = action.payload
+            const node = getNode(state, id)
+
+            // disallow reorder if the new parent is a descendant of reordered node (ouroboros)
+            if (newParentId) {
+                if (isDisplayedDescendantOf(state, getNode(state, newParentId), node)) {
+                    console.log('displayed descendant');
+                    return
+                }
+            }
+
+            console.log('id ' + newParentId);
+
+            node.parents[0] = newParentId
+            if (newParentId) {
+                var newParent = getNode(state, newParentId)
+                newParent.displayedChildren.splice(newIndex, 0, node.id)
+            }
         },
 
         nodeCompleteUpdated: (state, action) => {
@@ -331,7 +368,7 @@ export const nodeSlice = createSlice({
     },
 })
 
-export const { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, valueIconUpdated } = nodeSlice.actions
+export const { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, valueIconUpdated, nodeReordered } = nodeSlice.actions
 
 export const selectMaxDepth = (state) => Math.max.apply(null, state.nodes.map(node => {
     var depth = 0

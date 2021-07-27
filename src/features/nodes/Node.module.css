@@ -11,10 +11,14 @@
     text-align: left;
 
     transition: all 0.2s linear;
-    animation: scaleIn 0.5s;
+    /* animation: scaleIn 0.5s; */
     transform-origin: left;
 
     /* zoom: calc( ( var(--focussedDepth) - (2 * 100vw) / var(--maxDepth) * var(--maxDepth) ) / 200 ); */
+}
+
+.node.isDragging {
+    opacity: 0.4;
 }
 
 @keyframes scaleIn {

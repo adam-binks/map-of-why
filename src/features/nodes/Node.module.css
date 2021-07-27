@@ -1,12 +1,28 @@
 .node {
     display: flex;
     background-color: lightgray;
-    max-width: 200px;
-    min-width: 80px;
+    /* max-width: 200px;
+    min-width: 80px; */
+    width: 200px;
+
     padding: 5px;
     border-radius: 4px;
     border: 2px solid grey;
     text-align: left;
+
+    transition: all 0.2s linear;
+    animation: scaleIn 0.5s;
+    transform-origin: left;
+
+    /* zoom: calc( ( var(--focussedDepth) - (2 * 100vw) / var(--maxDepth) * var(--maxDepth) ) / 200 ); */
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    } to {
+        transform: scale(1);
+    }
 }
 
 .node input[type=checkbox] {
@@ -29,31 +45,35 @@
     left: 20px;
 }
 
-.addNodeButton {
+.hoverButton {
     display: none;
     position: absolute;
-    right: 5px;
     transform: translateY(-50%);
     top: 50%;
     z-index: 1;
     padding: 1px;
+}
+
+.addNodeButton {
+    composes: hoverButton;
+    right: 5px;
 }
 
 .deleteNodeButton {
-    display: none;
-    position: absolute;
-    right: 25px;
-    transform: translateY(-50%);
-    top: 50%;
-    z-index: 1;
-    padding: 1px;
+    composes: hoverButton;
+    right: 30px;
 }
 
-.nodeWrapper:hover .addNodeButton,
-.nodeWrapper:hover .deleteNodeButton {
+.toggleValueButton {
+    composes: hoverButton;
+    right: 55px;
+}
+
+.nodeWrapper:hover .hoverButton {
     display: inline-block;
 }
 
 .nodeWrapper {
     position: relative;
+    /* transition: all 0.2s ease-out; */
 }

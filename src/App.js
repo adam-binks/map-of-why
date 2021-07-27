@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <p>goal tracker baybee</p>
+      <p>Goal tracker</p>
       <Tree />
     </div>
   );

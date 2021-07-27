@@ -1,32 +1,148 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {} from './nodesSlice';
+import { selectMaxDepth } from './nodesSlice';
 import styles from './Tree.module.css';
 import { Node } from './Node';
 
+const targetWidth = 200 // ideally every node in the tree would be this width, to be readable
+
 export function Tree() {
+    const maxDepth = useSelector(selectMaxDepth)
+    const focussedDepth = Math.min(useSelector(state => state.navigation.focussedDepth), maxDepth)
+    const widthsByDepth = getWidthsByDepth(focussedDepth, maxDepth)
     const nodes = useSelector(state => state.nodes)
 
-    const getChildrenList = (parent_node) => {
-        const children = nodes.filter(node => parent_node ? node.parents.includes(parent_node.id) : !node.parents || !node.parents.length)
+    const getDisplayedChildrenList = (current_depth, parent_id) => {
+        var children;
+        if (parent_id) {
+            const parent = nodes.find(node => node.id === parent_id)
+            if (!parent) {
+                console.log(parent)
+                children = false
+            } else {
+                children = parent.displayedChildren
+            }
+        } else {
+            children = nodes.filter(node => node.parents.length === 0).map(node => node.id)
+        }
+
         if (!children || children.length === 0) {
             return
         }
 
-        const list_elements = children.map(child => {
-            const grandchildren = getChildrenList(child)
-            return (<li className={styles.treeElement} key={child.id}>
-                <Node key={child.id} id={child.id} />
+        const list_elements = children.map((child, index) => {
+            const grandchildren = getDisplayedChildrenList(current_depth + 1, child)
+
+            return (<li className={styles.treeElement} key={child}>
+                <Node
+                    id={child}
+                    key={child}
+                    zoom={parseFloat(widthsByDepth[current_depth]) / parseFloat(targetWidth)}
+                    width={widthsByDepth[current_depth]}
+                    depth={current_depth}
+                    index={index}
+                />
                 {grandchildren}
             </li>)
         })
 
-        return <ul className={styles.treeElement + (!parent_node ? " " + styles.tree : "")}>{list_elements}</ul>
+        return <ul className={styles.treeElement + (!parent_id ? " " + styles.tree : "")}>{list_elements}</ul>
     }
+
+    // setup re-render on screen resize
+    const [_, setDimensions] = React.useState({
+        height: window.innerHeight,
+        width: window.innerWidth
+    })
+    React.useEffect(() => {
+        const debouncedHandleResize = debounce(function handleResize() {
+            setDimensions({
+                height: window.innerHeight,
+                width: window.innerWidth
+            })
+        }, 200)
+        window.addEventListener('resize', debouncedHandleResize)
+        return _ => {
+            window.removeEventListener('resize', debouncedHandleResize)
+        }
+    })
 
     return (
         <div className={styles.treeContainer}>
-            {getChildrenList()}
+            {getDisplayedChildrenList(0)}
         </div>
     )
 }
+
+
+const getWidthsByDepth = (focussedDepth, maxDepth) => {
+    // calculate the widths of each depth of the nodes
+    const numDepths = maxDepth + 1 // because depth is 0-indexed
+    const padding = 100 // a bit of extra fudge to avoid it adding scrollbars
+
+    const fullWidth = Math.min(document.documentElement.clientWidth, window.innerWidth) - padding
+    const connectionWidth = 30
+    var remainingWidth = fullWidth - numDepths * connectionWidth // work out how much space the nodes have
+
+    var widthsByDepth = Array(numDepths)
+    if (targetWidth * numDepths < remainingWidth) {
+        widthsByDepth.fill(targetWidth) // everything is target width
+        console.log('no fish eye');
+        return widthsByDepth
+    }
+
+    // otherwise, apply faux fish-eye effect
+
+    const adjacentShrinkFactor = 0.15 // proportion of gap between prev adjacent and non-adjacents
+    const adjacentShrinkConstant = 10 // also need to shrink by a constant amount so we don't exceed screen width
+
+    widthsByDepth[focussedDepth] = targetWidth
+    remainingWidth -= targetWidth * 1.2 // add a bit of fudge
+
+    var adjacents = [focussedDepth, focussedDepth]
+    var remainingDepths = numDepths - 1
+    var width = targetWidth
+
+    while (adjacents[0] >= 0 || adjacents[1] < numDepths) {
+        var equiWidth = remainingWidth / remainingDepths
+
+        if (remainingDepths < 3) {
+            width = equiWidth
+        }
+
+        adjacents[0]--
+        adjacents[1]++
+        const shrinkFactorBonus = (adjacents[0] >= 0 && adjacents[1]) < numDepths ? adjacentShrinkFactor : 0
+
+        if (width > equiWidth) {
+            width = width - ((width - equiWidth) * (adjacentShrinkFactor + shrinkFactorBonus) + adjacentShrinkConstant)
+        }
+
+        // this could be a failsafe V but ideally dont need it
+        // if (width > remainingWidth) {
+        //     width = remainingWidth
+        // }
+
+        for (let adj_i = 0; adj_i < adjacents.length; adj_i++) {
+            const adjacent = adjacents[adj_i]
+            if (adjacent >= 0 && adjacent < numDepths) {
+                widthsByDepth[adjacent] = width
+                remainingDepths--
+                remainingWidth -= width
+            }
+        }
+    }
+
+    return widthsByDepth
+}
+
+export function debounce(fn, ms) {
+    let timer
+    return _ => {
+      clearTimeout(timer)
+      timer = setTimeout(_ => {
+        timer = null
+        fn.apply(this, arguments)
+      }, ms)
+    };
+  }

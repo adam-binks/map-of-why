@@ -1,14 +1,25 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { nodeAdded, nodeDeleted, nodeCompleteUpdated } from './nodesSlice';
-import styles from './Node.module.css';
 import { nanoid } from '@reduxjs/toolkit';
-import 'emoji-mart/css/emoji-mart.css';
+import { useDrag } from 'react-dnd';
+import { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated } from './nodesSlice';
 import { ValueIcon } from './ValueIcon';
+import { ItemTypes } from '../../DragItemTypes';
+import { focussedDepthUpdated } from '../navigation/navigationSlice';
+import { debounce } from './Tree';
+import styles from './Node.module.css';
+import 'emoji-mart/css/emoji-mart.css';
 
 export function Node(props) {
     const node = useSelector(state => state.nodes.find(node => node.id === props.id))
     const dispatch = useDispatch()
+
+    // const [{ isDragging }, drag] = useDrag({
+    //     type: ItemTypes.NODE,
+    //     item: () => {
+    //         return { id: node.id, index: props.index, parent: node.parents.length ? node.parents[0] : null}
+    //     }
+    // })
 
     if (!node) {
         return (
@@ -26,13 +37,15 @@ export function Node(props) {
     }
 
     return (
-        <div className={styles.nodeWrapper}>
+        <div className={styles.nodeWrapper}  style={{'zoom': props.zoom}}>
             <button className={styles.addNodeButton}
-                onClick={addNode}>+</button>
+                onClick={addNode}>➕</button>
             <button className={styles.deleteNodeButton}
-                onClick={() => dispatch(nodeDeleted({ id: node.id }))}>X</button>
+                onClick={() => dispatch(nodeDeleted({ id: node.id }))}>❌</button>
+            <button className={styles.toggleValueButton}
+                onClick={() => dispatch(nodeIsValueUpdated({ id: node.id, isValue: !node.isValue }))}>🔄</button>
 
-            <div className={styles.node}>
+            <div className={styles.node} style={{'width': props.width}} onMouseEnter={debounce(() => dispatch(focussedDepthUpdated({'focussedDepth': props.depth})), 50)}>
                 {node.isValue ?
                     <ValueIcon emoji={node.valueIcon} nodeId={node.id} />
                     :
@@ -40,6 +53,7 @@ export function Node(props) {
                         checked={node.completed}
                         onChange={(e) => dispatch(nodeCompleteUpdated({ id: node.id, completed: e.currentTarget.checked }))}
                     />}
+                    <span>{node.displayedChildren}</span>
                 <span>{node.label}</span>
             </div>
         </div>

@@ -10,14 +10,15 @@
     border: 2px solid grey;
     text-align: left;
 
-    transition: all 0.2s linear;
+    transition: all 0.2s ease-out;
     /* animation: scaleIn 0.5s; */
     transform-origin: left;
 
     /* zoom: calc( ( var(--focussedDepth) - (2 * 100vw) / var(--maxDepth) * var(--maxDepth) ) / 200 ); */
 }
 
-.node.isDragging {
+.nodeWrapper.isDragging .node,
+.nodeWrapper.isDragging + ul .node {
     opacity: 0.4;
 }
 

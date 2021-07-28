@@ -11,15 +11,22 @@ const getDefaultNode = () => {
     }
 }
 
+const rootNode = {
+    label: 'Root',
+    id: 'root',
+    parents: [],
+}
+
 // one deep line
 const initialState = [
+    rootNode,
     {
         label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         completed: false,
         isValue: true,
         valueIcon: '⭐',
         id: 'A1',
-        parents: []
+        parents: ['root']
     },
     {
         label: 'B1',
@@ -87,7 +94,7 @@ const initialState = [
         isValue: false,
         valueIcon: '⭐',
         id: 'A2',
-        parents: []
+        parents: ['root']
     },
     {
         label: 'A3',
@@ -95,7 +102,7 @@ const initialState = [
         isValue: true,
         valueIcon: '💪',
         id: 'A3',
-        parents: []
+        parents: ['root']
     },
     {
         label: 'New task',
@@ -271,10 +278,12 @@ const updateNodeAttribute = (state, id, attribute, value) => {
 }
 
 const removeNodeFromParentsDisplayedChildren = (nodes, node) => {
-    if (node && node.parents.length > 0) {
-        const displayedChildren = getNode(nodes, node.parents[0]).displayedChildren
-        const index = displayedChildren.indexOf(node.id)
-        displayedChildren.splice(index, 1)
+    if (node && node.parents.length) {
+        const displayedChildren = getNode(nodes, node.parents[0])?.displayedChildren
+        if (displayedChildren) {
+            const index = displayedChildren.indexOf(node.id)
+            displayedChildren.splice(index, 1)
+        }
     }
 }
 
@@ -285,7 +294,7 @@ const isDisplayedDescendantOf = (nodes, descendant, ancestor) => {
     if (!descendant.parents.length) {
         return false
     }
-    return isDisplayedDescendantOf(nodes, ancestor, getNode(nodes, descendant.parents[0]))
+    return isDisplayedDescendantOf(nodes, getNode(nodes, descendant.parents[0]), ancestor)
 }
 
 const initialiseDisplayedChildren = (nodes) => {
@@ -300,7 +309,7 @@ const initialiseDisplayedChildren = (nodes) => {
 
 export const nodeSlice = createSlice({
     name: 'nodes',
-    initialState: initialiseDisplayedChildren(initialState), // todo - remove once we are loading from saves properly
+    initialState: initialiseDisplayedChildren(initialState), // todo - remove initialiseDisplayedChildren once we are loading from saves properly
 
     reducers: {
         nodeAdded: (state, action) => {
@@ -319,6 +328,7 @@ export const nodeSlice = createSlice({
         nodeDeleted: (state, action) => {
             const deleteRecursive = (id) => {
                 const node = getNode(state, id)
+                node.displayedChildren.slice(0).map(child => deleteRecursive(child)) // slice to copy because we are deleting array elements
                 // remove this node
                 state.splice(state.findIndex((n) => n.id === node.id), 1)
 
@@ -335,12 +345,11 @@ export const nodeSlice = createSlice({
             // disallow reorder if the new parent is a descendant of reordered node (ouroboros)
             if (newParentId) {
                 if (isDisplayedDescendantOf(state, getNode(state, newParentId), node)) {
-                    console.log('displayed descendant');
                     return
                 }
             }
 
-            console.log('id ' + newParentId);
+            removeNodeFromParentsDisplayedChildren(state, node)
 
             node.parents[0] = newParentId
             if (newParentId) {

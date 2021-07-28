@@ -16,12 +16,7 @@ export function Tree() {
         var children;
         if (parent_id) {
             const parent = nodes.find(node => node.id === parent_id)
-            if (!parent) {
-                console.log(parent)
-                children = false
-            } else {
-                children = parent.displayedChildren
-            }
+            children = parent.displayedChildren
         } else {
             children = nodes.filter(node => node.parents.length === 0).map(node => node.id)
         }
@@ -46,11 +41,11 @@ export function Tree() {
             </li>)
         })
 
-        return <ul className={styles.treeElement + (!parent_id ? " " + styles.tree : "")}>{list_elements}</ul>
+        return <ul className={styles.treeElement + (parent_id === "root" ? " " + styles.tree : "")}>{list_elements}</ul>
     }
 
     // setup re-render on screen resize
-    const [_, setDimensions] = React.useState({
+    const [, setDimensions] = React.useState({
         height: window.innerHeight,
         width: window.innerWidth
     })
@@ -69,7 +64,7 @@ export function Tree() {
 
     return (
         <div className={styles.treeContainer}>
-            {getDisplayedChildrenList(0)}
+            {getDisplayedChildrenList(0, 'root')}
         </div>
     )
 }

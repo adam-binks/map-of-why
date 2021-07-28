@@ -2,11 +2,11 @@ import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDrag, useDrop } from 'react-dnd';
+import { throttle } from 'lodash';
 import { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, nodeReordered } from './nodesSlice';
 import { ValueIcon } from './ValueIcon';
 import { ItemTypes } from '../../DragItemTypes';
 import { focussedDepthUpdated } from '../navigation/navigationSlice';
-import { debounce } from './Tree';
 import styles from './Node.module.css';
 import 'emoji-mart/css/emoji-mart.css';
 
@@ -29,11 +29,10 @@ export function Node(props) {
             const dragIndex = item.index
             const hoverIndex = props.index
 
-            const parentsMatch = node.parents.length && item.parent === node.parents[0]
-            if (dragIndex === hoverIndex && parentsMatch) {
+            if (dragIndex === hoverIndex && (item.newParent ? item.newParent === node.parents[0] : item.parent === node.parents[0])) {
                 return
             }
-            if (parentsMatch) {
+            if (item.parent === node.parents[0]) {
                 const hoverBoundingRect = ref.current?.getBoundingClientRect()
                 const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
                 const clientOffset = monitor.getClientOffset()
@@ -49,13 +48,11 @@ export function Node(props) {
                 }
             }
             const newParentId = node.parents.length ? node.parents[0] : null
-            dispatch(nodeReordered({
-                id: item.id,
-                newParentId: newParentId,
-                newIndex: hoverIndex
-            }))
-            item.index = hoverIndex
-            item.parent = newParentId
+
+            if (!monitor.canDrop()) { return } // in case the drop target no longer exists
+
+            // throttle it to reduce dancing as layout shifts
+            throttledReorderNode(dispatch, item, newParentId, hoverIndex)
         },
     })
 
@@ -65,9 +62,10 @@ export function Node(props) {
             return {
                 id: node.id,
                 index: props.index,
-                parent: node.parents.length ? node.parents[0] : null
+                parent: node.parents.length ? node.parents[0] : null,
             }
         },
+        isDragging: (monitor) => node.id === monitor.getItem().id,
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
@@ -90,7 +88,7 @@ export function Node(props) {
 
     drag(drop(ref))
     return (
-        <div className={styles.nodeWrapper} style={{ 'zoom': props.zoom }}>
+        <div className={styles.nodeWrapper + (isDragging ? " " + styles.isDragging : "")} style={{ 'zoom': props.zoom }}>
             <button className={styles.addNodeButton}
                 onClick={addNode}>➕</button>
             <button className={styles.deleteNodeButton}
@@ -101,9 +99,9 @@ export function Node(props) {
             <div
                 ref={ref} // drag this
                 data-handler-id={handlerId} // dropzone
-                className={styles.node + (isDragging ? " " + styles.isDragging : "")}
+                className={styles.node}
                 style={{ 'width': props.width }}
-                onMouseEnter={debounce(() => dispatch(focussedDepthUpdated({ 'focussedDepth': props.depth })), 50)}
+                onMouseEnter={throttle(() => dispatch(focussedDepthUpdated({ 'focussedDepth': props.depth })), 50)}
             >
                 {node.isValue ?
                     <ValueIcon emoji={node.valueIcon} nodeId={node.id} />
@@ -118,3 +116,14 @@ export function Node(props) {
         </div>
     )
 }
+
+
+const throttledReorderNode = throttle((dispatch, item, newParentId, hoverIndex) => {
+    dispatch(nodeReordered({
+        id: item.id,
+        newParentId: newParentId,
+        newIndex: hoverIndex
+    }))
+    item.index = hoverIndex
+    item.newParent = newParentId
+}, 500)

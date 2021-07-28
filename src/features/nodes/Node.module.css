@@ -1,6 +1,6 @@
 .node {
     display: flex;
-    background-color: lightgray;
+    background-color: var(--valueColour, lightgray);
     /* max-width: 200px;
     min-width: 80px; */
     width: 200px;
@@ -35,8 +35,17 @@
     zoom: 2;
 }
 
-.node span {
-    margin: 4px;
+.nodeLabel {
+    resize: none;
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: transparent;
+    border: 0 none;
+    outline: none;
+}
+
+.nodeLabel:focus {
+    background-color: rgba(0, 0, 0, 0.123);
 }
 
 .valueIcon {

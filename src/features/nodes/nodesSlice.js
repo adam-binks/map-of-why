@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import Please from 'pleasejs'
 
 // values are incomplete - to be used with spread operator
 const getDefaultNode = () => {
@@ -275,6 +276,7 @@ const updateNodeAttribute = (state, id, attribute, value) => {
     if (node) {
         node[attribute] = value
     }
+    return node
 }
 
 const removeNodeFromParentsDisplayedChildren = (nodes, node) => {
@@ -287,6 +289,15 @@ const removeNodeFromParentsDisplayedChildren = (nodes, node) => {
     }
 }
 
+const getAncestors = (nodes, id, ancestors) => {
+    const node = getNode(nodes, id)
+    if (!node || ancestors.includes(node)) { return ancestors }
+    ancestors.push(node)
+    node.parents.forEach(parent => getAncestors(nodes, parent, ancestors))
+
+    return ancestors
+}
+
 const isDisplayedDescendantOf = (nodes, descendant, ancestor) => {
     if (ancestor === descendant) {
         return true
@@ -297,13 +308,41 @@ const isDisplayedDescendantOf = (nodes, descendant, ancestor) => {
     return isDisplayedDescendantOf(nodes, getNode(nodes, descendant.parents[0]), ancestor)
 }
 
+const getNewNodeColour = (nodes) => {
+    const opt = {
+        'value': 0.9
+    }
+    // const initialPallet = [
+    //     'green',
+    //     'blue',
+    //     'yellow',
+    //     'fuchsia',
+    //     'olive',
+    //     'red',
+    // ].map(htmlColor => Please.make_color({...opt, 'base_color': htmlColor }))
+    
+    // const numValueNodes = nodes.filter(node => node.isValue).length
+    // console.log(numValueNodes);
+    // if (numValueNodes <= initialPallet.length) {
+    //     return initialPallet[numValueNodes - 1]
+    // } else {
+        return Please.make_color(opt)
+    // }
+}
+
 const initialiseDisplayedChildren = (nodes) => {
-    nodes.forEach(node => {
+    for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i]
+
         // need to store this so we can reorder them
         if (!node.displayedChildren) {
             node.displayedChildren = nodes.filter(potentialChild => potentialChild.parents.length > 0 && potentialChild.parents[0] === node.id).map(node => node.id)
         }
-    })
+
+        if (node.isValue && node.valueColour === undefined) {
+            node.valueColour = getNewNodeColour(nodes)
+        }
+    }
     return nodes
 }
 
@@ -314,14 +353,20 @@ export const nodeSlice = createSlice({
     reducers: {
         nodeAdded: (state, action) => {
             const { id, parents } = action.payload
-            state.push({
+            var newNode = {
                 ...getDefaultNode(),
                 id: id,
                 parents: parents,
-            })
+            }
+            state.push(newNode)
 
             if (parents.length > 0) {
                 getNode(state, parents[0]).displayedChildren.push(id)
+            }
+
+            const valueAncestors = getAncestors(state, id, []).filter(ancestor => ancestor.isValue)
+            if (valueAncestors.length) {
+                newNode.valueIcon = valueAncestors[0].valueIcon
             }
         },
 
@@ -358,12 +403,19 @@ export const nodeSlice = createSlice({
             }
         },
 
+        nodeLabelUpdated: (state, action) => {
+            updateNodeAttribute(state, action.payload.id, 'label', action.payload.label)
+        },
+
         nodeCompleteUpdated: (state, action) => {
             updateNodeAttribute(state, action.payload.id, 'completed', action.payload.completed)
         },
 
         nodeIsValueUpdated: (state, action) => {
-            updateNodeAttribute(state, action.payload.id, 'isValue', action.payload.isValue)
+            const node = updateNodeAttribute(state, action.payload.id, 'isValue', action.payload.isValue)
+            if (node.isValue && node.valueColour === undefined) {
+                node.valueColour = getNewNodeColour(state)
+            }
         },
 
         valueIconUpdated: (state, action) => {
@@ -377,7 +429,7 @@ export const nodeSlice = createSlice({
     },
 })
 
-export const { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, valueIconUpdated, nodeReordered } = nodeSlice.actions
+export const { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, valueIconUpdated, nodeReordered, nodeLabelUpdated } = nodeSlice.actions
 
 export const selectMaxDepth = (state) => Math.max.apply(null, state.nodes.map(node => {
     var depth = 0

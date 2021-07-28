@@ -27,8 +27,9 @@ export function Tree() {
 
         const list_elements = children.map((child, index) => {
             const grandchildren = getDisplayedChildrenList(current_depth + 1, child)
-
-            return (<li className={styles.treeElement} key={child}>
+            
+            const childNode = nodes.find(node => node.id === child)
+            return (<li className={styles.treeElement} style={{...(childNode?.isValue ? {'--valueColour': childNode.valueColour} : {})}} key={child}>
                 <Node
                     id={child}
                     key={child}
@@ -82,7 +83,6 @@ const getWidthsByDepth = (focussedDepth, maxDepth) => {
     var widthsByDepth = Array(numDepths)
     if (targetWidth * numDepths < remainingWidth) {
         widthsByDepth.fill(targetWidth) // everything is target width
-        console.log('no fish eye');
         return widthsByDepth
     }
 

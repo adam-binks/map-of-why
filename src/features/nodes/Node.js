@@ -2,8 +2,9 @@ import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDrag, useDrop } from 'react-dnd';
+import TextareaAutosize from 'react-textarea-autosize';
 import { throttle } from 'lodash';
-import { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, nodeReordered } from './nodesSlice';
+import { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, nodeReordered, nodeLabelUpdated } from './nodesSlice';
 import { ValueIcon } from './ValueIcon';
 import { ItemTypes } from '../../DragItemTypes';
 import { focussedDepthUpdated } from '../navigation/navigationSlice';
@@ -88,7 +89,10 @@ export function Node(props) {
 
     drag(drop(ref))
     return (
-        <div className={styles.nodeWrapper + (isDragging ? " " + styles.isDragging : "")} style={{ 'zoom': props.zoom }}>
+        <div 
+            className={styles.nodeWrapper + (isDragging ? " " + styles.isDragging : "")}
+            style={{ 'zoom': props.zoom}}
+        >
             <button className={styles.addNodeButton}
                 onClick={addNode}>➕</button>
             <button className={styles.deleteNodeButton}
@@ -110,8 +114,14 @@ export function Node(props) {
                         checked={node.completed}
                         onChange={(e) => dispatch(nodeCompleteUpdated({ id: node.id, completed: e.currentTarget.checked }))}
                     />}
-                {/* <span>{node.displayedChildren}</span> */}
-                <span>{node.label}</span>
+                {/* <p>col:{node.valueColour}</p> */}
+                <TextareaAutosize
+                    className={styles.nodeLabel}
+                    value={node.label}
+                    onChange={(e) => dispatch(nodeLabelUpdated({id: node.id, label: e.target.value}))}
+                    minRows={1}
+                    maxRows={5}
+                />
             </div>
         </div>
     )

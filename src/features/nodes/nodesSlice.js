@@ -271,16 +271,7 @@ const rootNode = {
 
 // example
 const initialState = [
-    {
-      label: 'Root',
-      id: 'root',
-      parents: [],
-      displayedChildren: [
-        'A1',
-        'A2',
-        'A3'
-      ]
-    },
+    rootNode,
     {
       label: 'Reducing suffering of sentient beings as much as possible',
       completed: false,

@@ -4,7 +4,6 @@ import { selectMaxDepth } from './nodesSlice';
 import styles from './Tree.module.css';
 import { Node } from './Node';
 import { AddChildButton } from './AddChildButton';
-import { node } from 'prop-types';
 
 const targetWidth = 200 // ideally every node in the tree would be this width, to be readable
 
@@ -23,10 +22,12 @@ export function Tree() {
             children = nodes.filter(node => node.parents.length === 0).map(node => node.id)
         }
 
-        const addChildButton = <li className={styles.treeElement} key={node.id + "_addChild"}><AddChildButton parent={node.id}  /></li>
+        const addChildButton = (index) => <li className={styles.treeElement} key={parent_id + "_addChild"}><AddChildButton parent={parent_id} index={index} /></li>
+
+        const wrapInUl = (elements) => <ul className={styles.treeElement + (parent_id === "root" ? " " + styles.tree : "")}>{elements}</ul>
 
         if (!children || children.length === 0) {
-            return addChildButton
+            return wrapInUl(addChildButton(0))
         }
 
         const list_elements = children.map((child, index) => {
@@ -46,7 +47,7 @@ export function Tree() {
             </li>)
         })
 
-        return <ul className={styles.treeElement + (parent_id === "root" ? " " + styles.tree : "")}>{list_elements} {addChildButton}</ul>
+        return wrapInUl(<>{list_elements} {addChildButton(children.length)}</>)
     }
 
     // setup re-render on screen resize

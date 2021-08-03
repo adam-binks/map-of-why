@@ -128,12 +128,12 @@ export function Node(props) {
 }
 
 
-const throttledReorderNode = throttle((dispatch, item, newParentId, hoverIndex) => {
+export const throttledReorderNode = throttle((dispatch, item, newParentId, newIndex) => {
     dispatch(nodeReordered({
         id: item.id,
         newParentId: newParentId,
-        newIndex: hoverIndex
+        newIndex: newIndex
     }))
-    item.index = hoverIndex
+    item.index = newIndex
     item.newParent = newParentId
 }, 500)

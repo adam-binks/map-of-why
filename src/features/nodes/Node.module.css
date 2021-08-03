@@ -33,6 +33,7 @@
 .node input[type=checkbox] {
     margin: 2px;
     zoom: 2;
+    filter: hue-rotate(280deg); /* this is green hue on Chrome - likely different in other browsers */
 }
 
 .nodeLabel {

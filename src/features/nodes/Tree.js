@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { selectMaxDepth } from './nodesSlice';
 import styles from './Tree.module.css';
 import { Node } from './Node';
+import { AddChildButton } from './AddChildButton';
+import { node } from 'prop-types';
 
 const targetWidth = 200 // ideally every node in the tree would be this width, to be readable
 
@@ -21,8 +23,10 @@ export function Tree() {
             children = nodes.filter(node => node.parents.length === 0).map(node => node.id)
         }
 
+        const addChildButton = <li className={styles.treeElement} key={node.id + "_addChild"}><AddChildButton parent={node.id}  /></li>
+
         if (!children || children.length === 0) {
-            return
+            return addChildButton
         }
 
         const list_elements = children.map((child, index) => {
@@ -42,7 +46,7 @@ export function Tree() {
             </li>)
         })
 
-        return <ul className={styles.treeElement + (parent_id === "root" ? " " + styles.tree : "")}>{list_elements}</ul>
+        return <ul className={styles.treeElement + (parent_id === "root" ? " " + styles.tree : "")}>{list_elements} {addChildButton}</ul>
     }
 
     // setup re-render on screen resize

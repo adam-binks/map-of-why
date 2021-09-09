@@ -38,7 +38,9 @@ export function AddChildButton(props) {
 
     return (
         <div
+            ref={ref}
             data-handler-id={handlerId} // drop zone
+            style={{ 'zoom': props.zoom}}
         >
             <button onClick={addNode}>➕</button>
         </div>

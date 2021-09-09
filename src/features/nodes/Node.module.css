@@ -43,6 +43,7 @@
     background-color: transparent;
     border: 0 none;
     outline: none;
+    overflow:hidden
 }
 
 .nodeLabel:focus {
@@ -69,19 +70,14 @@
     padding: 1px;
 }
 
-.addNodeButton {
+.deleteNodeButton {
     composes: hoverButton;
     right: 5px;
 }
 
-.deleteNodeButton {
-    composes: hoverButton;
-    right: 30px;
-}
-
 .toggleValueButton {
     composes: hoverButton;
-    right: 55px;
+    right: 30px;
 }
 
 .nodeWrapper:hover .hoverButton {

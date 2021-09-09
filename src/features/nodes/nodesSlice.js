@@ -4,7 +4,7 @@ import Please from 'pleasejs'
 // values are incomplete - to be used with spread operator
 const getDefaultNode = () => {
     return {
-        label: "New task",
+        label: "",
         completed: false,
         isValue: false,
         valueIcon: '⭐',

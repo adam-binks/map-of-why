@@ -22,7 +22,10 @@ export function Tree() {
             children = nodes.filter(node => node.parents.length === 0).map(node => node.id)
         }
 
-        const addChildButton = (index) => <li className={styles.treeElement} key={parent_id + "_addChild"}><AddChildButton parent={parent_id} index={index} /></li>
+        const zoom = parseFloat(widthsByDepth[current_depth]) / parseFloat(targetWidth)
+
+        const addChildButton = (index) => <li className={styles.treeElement} key={parent_id + "_addChild"}><AddChildButton parent={parent_id} index={index} 
+            zoom={zoom}/></li>
 
         const wrapInUl = (elements) => <ul className={styles.treeElement + (parent_id === "root" ? " " + styles.tree : "")}>{elements}</ul>
 
@@ -38,7 +41,7 @@ export function Tree() {
                 <Node
                     id={child}
                     key={child}
-                    zoom={parseFloat(widthsByDepth[current_depth]) / parseFloat(targetWidth)}
+                    zoom={zoom}
                     width={widthsByDepth[current_depth]}
                     depth={current_depth}
                     index={index}

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import nodesReducer from '../features/nodes/nodesSlice';
 import navigationReducer from '../features/navigation/navigationSlice';
-import { AUTOSAVE, saveState } from './localstorage';
+import { saveState } from './localstorage';
 import { throttle } from 'lodash';
 
 export const store = configureStore({
@@ -11,6 +11,14 @@ export const store = configureStore({
     },
 })
 
-const throttledSave = throttle(() => saveState(store.getState().nodes, AUTOSAVE), 1000) // autosave interval
+export var AUTOSAVE_PROPS = {paused: false}
+
+const throttledSave = throttle(() => {
+    if (!AUTOSAVE_PROPS.paused) {
+        saveState(store.getState().nodes, store.getState().navigation.activeProject)
+    } else {
+        console.log("autosave paused")
+    }
+}, 1000) // autosave interval
 
 store.subscribe(throttledSave)

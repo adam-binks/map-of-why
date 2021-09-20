@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Please from 'pleasejs'
+import { AUTOSAVE, loadState } from '../../app/localstorage';
 
 // values are incomplete - to be used with spread operator
 const getDefaultNode = () => {
@@ -273,258 +274,258 @@ const rootNode = {
 const initialState = [
     rootNode,
     {
-      label: 'Reducing suffering of sentient beings as much as possible',
-      completed: false,
-      isValue: true,
-      valueIcon: '⭐',
-      id: 'A1',
-      parents: [
-        'root'
-      ],
-      displayedChildren: [
-        'YdLXxgqxi-7cKVRhToZhI',
-        '6Qg1nCzJO6KKPpHPmkqqR'
-      ],
-      valueColour: [
-        '#89e58a'
-      ]
+        label: 'Reducing suffering of sentient beings as much as possible',
+        completed: false,
+        isValue: true,
+        valueIcon: '⭐',
+        id: 'A1',
+        parents: [
+            'root'
+        ],
+        displayedChildren: [
+            'YdLXxgqxi-7cKVRhToZhI',
+            '6Qg1nCzJO6KKPpHPmkqqR'
+        ],
+        valueColour: [
+            '#89e58a'
+        ]
     },
     {
-      label: 'Stay close to my sister',
-      completed: false,
-      isValue: true,
-      valueIcon: '❤️',
-      id: 'B3',
-      parents: [
-        'A2'
-      ],
-      displayedChildren: [
-        'BE7ChbcSZVPxcHAqQoZAu'
-      ],
-      valueColour: [
-        '#e589af'
-      ]
+        label: 'Stay close to my sister',
+        completed: false,
+        isValue: true,
+        valueIcon: '❤️',
+        id: 'B3',
+        parents: [
+            'A2'
+        ],
+        displayedChildren: [
+            'BE7ChbcSZVPxcHAqQoZAu'
+        ],
+        valueColour: [
+            '#e589af'
+        ]
     },
     {
-      label: 'Caring for my family and friends',
-      completed: false,
-      isValue: true,
-      valueIcon: '❤️',
-      id: 'A2',
-      parents: [
-        'root'
-      ],
-      displayedChildren: [
-        'B3',
-        '8wR54PquFQPmA57WxK5HS'
-      ],
-      valueColour: [
-        '#e589b1'
-      ]
+        label: 'Caring for my family and friends',
+        completed: false,
+        isValue: true,
+        valueIcon: '❤️',
+        id: 'A2',
+        parents: [
+            'root'
+        ],
+        displayedChildren: [
+            'B3',
+            '8wR54PquFQPmA57WxK5HS'
+        ],
+        valueColour: [
+            '#e589b1'
+        ]
     },
     {
-      label: 'Staying healthy and happy',
-      completed: false,
-      isValue: true,
-      valueIcon: '💪',
-      id: 'A3',
-      parents: [
-        'root'
-      ],
-      displayedChildren: [
-        'PELRBdnb65s7HdboNuOST',
-        'tJAKmZsWI5CN_BTJfdc2H'
-      ],
-      valueColour: [
-        '#89e5a2'
-      ]
+        label: 'Staying healthy and happy',
+        completed: false,
+        isValue: true,
+        valueIcon: '💪',
+        id: 'A3',
+        parents: [
+            'root'
+        ],
+        displayedChildren: [
+            'PELRBdnb65s7HdboNuOST',
+            'tJAKmZsWI5CN_BTJfdc2H'
+        ],
+        valueColour: [
+            '#89e5a2'
+        ]
     },
     {
-      label: 'Choose a career path that reduces suffering',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      displayedChildren: [
-        'tbwhnEa40aFU_88Ulara1',
-        'XTRqy4uIxlo-rClcUpO75',
-        '-FYR8oKZnWp6n2dnDFvjF'
-      ],
-      id: 'YdLXxgqxi-7cKVRhToZhI',
-      parents: [
-        'A1'
-      ]
+        label: 'Choose a career path that reduces suffering',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        displayedChildren: [
+            'tbwhnEa40aFU_88Ulara1',
+            'XTRqy4uIxlo-rClcUpO75',
+            '-FYR8oKZnWp6n2dnDFvjF'
+        ],
+        id: 'YdLXxgqxi-7cKVRhToZhI',
+        parents: [
+            'A1'
+        ]
     },
     {
-      label: 'Make a list of plausible career paths ',
-      completed: true,
-      isValue: false,
-      valueIcon: '⭐',
-      displayedChildren: [],
-      id: 'tbwhnEa40aFU_88Ulara1',
-      parents: [
-        'YdLXxgqxi-7cKVRhToZhI'
-      ]
+        label: 'Make a list of plausible career paths ',
+        completed: true,
+        isValue: false,
+        valueIcon: '⭐',
+        displayedChildren: [],
+        id: 'tbwhnEa40aFU_88Ulara1',
+        parents: [
+            'YdLXxgqxi-7cKVRhToZhI'
+        ]
     },
     {
-      label: 'Talk to experts about the impact of each career',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      displayedChildren: [
-        'dLgcPMRnel0O3pRYvNn8T',
-        'HbNyxe5bv5Whjc2-n5Q7u'
-      ],
-      id: 'XTRqy4uIxlo-rClcUpO75',
-      parents: [
-        'YdLXxgqxi-7cKVRhToZhI'
-      ]
+        label: 'Talk to experts about the impact of each career',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        displayedChildren: [
+            'dLgcPMRnel0O3pRYvNn8T',
+            'HbNyxe5bv5Whjc2-n5Q7u'
+        ],
+        id: 'XTRqy4uIxlo-rClcUpO75',
+        parents: [
+            'YdLXxgqxi-7cKVRhToZhI'
+        ]
     },
     {
-      label: 'Score each career path based on my estimate of suffering reduced',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      displayedChildren: [],
-      id: '-FYR8oKZnWp6n2dnDFvjF',
-      parents: [
-        'YdLXxgqxi-7cKVRhToZhI'
-      ]
+        label: 'Score each career path based on my estimate of suffering reduced',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        displayedChildren: [],
+        id: '-FYR8oKZnWp6n2dnDFvjF',
+        parents: [
+            'YdLXxgqxi-7cKVRhToZhI'
+        ]
     },
     {
-      label: 'Talk to Julie',
-      completed: false,
-      isValue: false,
-      valueIcon: '⭐',
-      displayedChildren: [],
-      id: 'dLgcPMRnel0O3pRYvNn8T',
-      parents: [
-        'XTRqy4uIxlo-rClcUpO75'
-      ]
+        label: 'Talk to Julie',
+        completed: false,
+        isValue: false,
+        valueIcon: '⭐',
+        displayedChildren: [],
+        id: 'dLgcPMRnel0O3pRYvNn8T',
+        parents: [
+            'XTRqy4uIxlo-rClcUpO75'
+        ]
     },
     {
-      label: 'Email Amir',
-      completed: true,
-      isValue: false,
-      valueIcon: '⭐',
-      displayedChildren: [],
-      id: 'HbNyxe5bv5Whjc2-n5Q7u',
-      parents: [
-        'XTRqy4uIxlo-rClcUpO75'
-      ]
+        label: 'Email Amir',
+        completed: true,
+        isValue: false,
+        valueIcon: '⭐',
+        displayedChildren: [],
+        id: 'HbNyxe5bv5Whjc2-n5Q7u',
+        parents: [
+            'XTRqy4uIxlo-rClcUpO75'
+        ]
     },
     {
-      label: 'Visit my sister',
-      completed: false,
-      isValue: false,
-      valueIcon: '❤️',
-      displayedChildren: [
-        'qzKIaQIgzZvi61xRSJ1RO',
-        'BzASsKGLTdI0WaVSFgH3M'
-      ],
-      id: 'BE7ChbcSZVPxcHAqQoZAu',
-      parents: [
-        'B3'
-      ]
+        label: 'Visit my sister',
+        completed: false,
+        isValue: false,
+        valueIcon: '❤️',
+        displayedChildren: [
+            'qzKIaQIgzZvi61xRSJ1RO',
+            'BzASsKGLTdI0WaVSFgH3M'
+        ],
+        id: 'BE7ChbcSZVPxcHAqQoZAu',
+        parents: [
+            'B3'
+        ]
     },
     {
-      label: 'Coordinate a time to visit',
-      completed: false,
-      isValue: false,
-      valueIcon: '❤️',
-      displayedChildren: [],
-      id: 'qzKIaQIgzZvi61xRSJ1RO',
-      parents: [
-        'BE7ChbcSZVPxcHAqQoZAu'
-      ]
+        label: 'Coordinate a time to visit',
+        completed: false,
+        isValue: false,
+        valueIcon: '❤️',
+        displayedChildren: [],
+        id: 'qzKIaQIgzZvi61xRSJ1RO',
+        parents: [
+            'BE7ChbcSZVPxcHAqQoZAu'
+        ]
     },
     {
-      label: 'Book a train',
-      completed: false,
-      isValue: false,
-      valueIcon: '❤️',
-      displayedChildren: [],
-      id: 'BzASsKGLTdI0WaVSFgH3M',
-      parents: [
-        'BE7ChbcSZVPxcHAqQoZAu'
-      ]
+        label: 'Book a train',
+        completed: false,
+        isValue: false,
+        valueIcon: '❤️',
+        displayedChildren: [],
+        id: 'BzASsKGLTdI0WaVSFgH3M',
+        parents: [
+            'BE7ChbcSZVPxcHAqQoZAu'
+        ]
     },
     {
-      label: 'Plan surprise party for mum',
-      completed: false,
-      isValue: false,
-      valueIcon: '❤️',
-      displayedChildren: [],
-      id: '8wR54PquFQPmA57WxK5HS',
-      parents: [
-        'A2'
-      ]
+        label: 'Plan surprise party for mum',
+        completed: false,
+        isValue: false,
+        valueIcon: '❤️',
+        displayedChildren: [],
+        id: '8wR54PquFQPmA57WxK5HS',
+        parents: [
+            'A2'
+        ]
     },
     {
-      label: 'Make donations to highly effective charities',
-      completed: false,
-      isValue: true,
-      valueIcon: '💸',
-      displayedChildren: [
-        'lYSvsF6cL3UBip4dzI5eS'
-      ],
-      id: '6Qg1nCzJO6KKPpHPmkqqR',
-      parents: [
-        'A1'
-      ],
-      valueColour: [
-        '#e58d89'
-      ]
+        label: 'Make donations to highly effective charities',
+        completed: false,
+        isValue: true,
+        valueIcon: '💸',
+        displayedChildren: [
+            'lYSvsF6cL3UBip4dzI5eS'
+        ],
+        id: '6Qg1nCzJO6KKPpHPmkqqR',
+        parents: [
+            'A1'
+        ],
+        valueColour: [
+            '#e58d89'
+        ]
     },
     {
-      label: 'Set up recurring donation to GiveDirectly',
-      completed: false,
-      isValue: false,
-      valueIcon: '💸',
-      displayedChildren: [],
-      id: 'lYSvsF6cL3UBip4dzI5eS',
-      parents: [
-        '6Qg1nCzJO6KKPpHPmkqqR'
-      ]
+        label: 'Set up recurring donation to GiveDirectly',
+        completed: false,
+        isValue: false,
+        valueIcon: '💸',
+        displayedChildren: [],
+        id: 'lYSvsF6cL3UBip4dzI5eS',
+        parents: [
+            '6Qg1nCzJO6KKPpHPmkqqR'
+        ]
     },
     {
-      label: 'Plan a board game night',
-      completed: false,
-      isValue: false,
-      valueIcon: '💪',
-      displayedChildren: [],
-      id: 'PELRBdnb65s7HdboNuOST',
-      parents: [
-        'A3'
-      ]
+        label: 'Plan a board game night',
+        completed: false,
+        isValue: false,
+        valueIcon: '💪',
+        displayedChildren: [],
+        id: 'PELRBdnb65s7HdboNuOST',
+        parents: [
+            'A3'
+        ]
     },
     {
-      label: 'Improve mental health',
-      completed: false,
-      isValue: true,
-      valueIcon: '🧠',
-      displayedChildren: [
-        'Trsn4Q7K2jzbDmaCasD30'
-      ],
-      id: 'tJAKmZsWI5CN_BTJfdc2H',
-      parents: [
-        'A3'
-      ],
-      valueColour: [
-        '#89e59e'
-      ]
+        label: 'Improve mental health',
+        completed: false,
+        isValue: true,
+        valueIcon: '🧠',
+        displayedChildren: [
+            'Trsn4Q7K2jzbDmaCasD30'
+        ],
+        id: 'tJAKmZsWI5CN_BTJfdc2H',
+        parents: [
+            'A3'
+        ],
+        valueColour: [
+            '#89e59e'
+        ]
     },
     {
-      label: 'Read meditation book',
-      completed: false,
-      isValue: false,
-      valueIcon: '🧠',
-      displayedChildren: [],
-      id: 'Trsn4Q7K2jzbDmaCasD30',
-      parents: [
-        'tJAKmZsWI5CN_BTJfdc2H'
-      ]
+        label: 'Read meditation book',
+        completed: false,
+        isValue: false,
+        valueIcon: '🧠',
+        displayedChildren: [],
+        id: 'Trsn4Q7K2jzbDmaCasD30',
+        parents: [
+            'tJAKmZsWI5CN_BTJfdc2H'
+        ]
     }
-  ]
+]
 
 const getNode = (state, id) => state.find(node => node.id === id)
 
@@ -577,13 +578,13 @@ const getNewNodeColour = (nodes) => {
     //     'olive',
     //     'red',
     // ].map(htmlColor => Please.make_color({...opt, 'base_color': htmlColor }))
-    
+
     // const numValueNodes = nodes.filter(node => node.isValue).length
     // console.log(numValueNodes);
     // if (numValueNodes <= initialPallet.length) {
     //     return initialPallet[numValueNodes - 1]
     // } else {
-        return Please.make_color(opt)
+    return Please.make_color(opt)
     // }
 }
 
@@ -603,9 +604,17 @@ const initialiseDisplayedChildren = (nodes) => {
     return nodes
 }
 
+const getInitialState = () => {
+    var state = loadState(AUTOSAVE)
+    if (!state) {
+        state = [rootNode]
+    }
+    return initialiseDisplayedChildren(state)
+}
+
 export const nodeSlice = createSlice({
     name: 'nodes',
-    initialState: initialiseDisplayedChildren(initialState), // todo - remove initialiseDisplayedChildren once we are loading from saves properly
+    initialState: getInitialState(),
 
     reducers: {
         nodeAdded: (state, action) => {

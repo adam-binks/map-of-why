@@ -15,6 +15,7 @@
     "react-dnd-html5-backend": "^14.0.0",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
+    "react-rewards": "^1.1.2",
     "react-scripts": "4.0.3",
     "react-select": "^4.3.1",
     "react-textarea-autosize": "^8.3.3",

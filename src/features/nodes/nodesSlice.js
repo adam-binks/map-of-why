@@ -48,6 +48,10 @@ const getAncestors = (nodes, id, ancestors) => {
     return ancestors
 }
 
+export const getValueAncestors = (nodes, id)  => {
+    return getAncestors(nodes, id, []).filter(ancestor => ancestor.isValue)
+}
+
 const isDisplayedDescendantOf = (nodes, descendant, ancestor) => {
     if (ancestor === descendant) {
         return true
@@ -126,7 +130,7 @@ export const nodeSlice = createSlice({
                 getNode(state, parents[0]).displayedChildren.push(id)
             }
 
-            const valueAncestors = getAncestors(state, id, []).filter(ancestor => ancestor.isValue)
+            const valueAncestors = getValueAncestors(state, id)
             if (valueAncestors.length) {
                 newNode.valueIcon = valueAncestors[0].valueIcon
             }

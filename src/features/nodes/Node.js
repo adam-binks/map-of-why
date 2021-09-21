@@ -10,12 +10,17 @@ import { focussedDepthUpdated } from '../navigation/navigationSlice';
 import styles from './Node.module.css';
 import 'emoji-mart/css/emoji-mart.css';
 import Reward from 'react-rewards';
+import { ParentArea } from './ParentArea';
 
 export function Node(props) {
     const ref = useRef(null)
     const rewardRef = useRef(null)
     const dispatch = useDispatch()
+    
     const node = useSelector(state => state.nodes.find(node => node.id === props.id))
+    
+    const parents = useSelector(state => node?.parents.map(parentId => state.nodes.find(n => n.id === parentId)))
+    const nonDisplayedParents = parents.filter(parent => !parent.displayedChildren.includes(node.id))
 
     const valueAncestors = useSelector(state => getValueAncestors(state.nodes, node.id))
     const rewardEmojis = valueAncestors.length > 0 ? valueAncestors.map(ancestor => ancestor.valueIcon) : ["✔️", "✅", "🎉"]
@@ -93,23 +98,23 @@ export function Node(props) {
 
     drag(drop(ref))
     return (
-        <Reward
-            ref={rewardRef}
-            type='emoji'
-            config={{
-                emoji: rewardEmojis,
-                lifetime: 150,
-            }}
+        <div
+            className={styles.nodeWrapper + (isDragging ? " " + styles.isDragging : "")}
+            style={{ 'zoom': props.zoom }}
         >
-            <div 
-                className={styles.nodeWrapper + (isDragging ? " " + styles.isDragging : "")}
-                style={{ 'zoom': props.zoom}}
+            <ParentArea parents={nonDisplayedParents} />
+            <Reward
+                ref={rewardRef}
+                type='emoji'
+                config={{
+                    emoji: rewardEmojis,
+                    lifetime: 150,
+                }}
             >
                 <button className={styles.deleteNodeButton}
                     onClick={() => dispatch(nodeDeleted({ id: node.id }))}>❌</button>
                 <button className={styles.toggleValueButton}
                     onClick={() => dispatch(nodeIsValueUpdated({ id: node.id, isValue: !node.isValue }))}>🔄</button>
-
                 <div
                     ref={ref} // drag this
                     data-handler-id={handlerId} // dropzone
@@ -127,15 +132,15 @@ export function Node(props) {
                     <TextareaAutosize
                         className={styles.nodeLabel}
                         value={node.label}
-                        onChange={(e) => dispatch(nodeLabelUpdated({id: node.id, label: e.target.value}))}
+                        onChange={(e) => dispatch(nodeLabelUpdated({ id: node.id, label: e.target.value }))}
                         minRows={1}
                         maxRows={5}
                         autoFocus={true}
                         placeholder={"Enter a title for this " + (node.isValue ? "value" : "task") + "..."}
                     />
                 </div>
-            </div>
-        </Reward>
+            </Reward>
+        </div>
     )
 }
 

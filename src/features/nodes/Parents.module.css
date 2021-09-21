@@ -1,0 +1,13 @@
+.parentArea {
+    position: absolute;
+    left: -15%;
+    height: 100%;
+    background-color: red;
+}
+
+.parentIndicator {
+    min-width: 5px;
+    min-height: 5px;
+    background-color: honeydew;
+    font-size: smaller;
+}

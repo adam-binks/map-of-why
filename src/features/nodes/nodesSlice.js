@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Please from 'pleasejs'
-import { AUTOSAVE, loadState } from '../../app/localstorage';
+import { getLastActiveProject, loadState } from '../../app/localstorage';
 
 // values are incomplete - to be used with spread operator
 const getDefaultNode = () => {
@@ -101,7 +101,7 @@ const initialiseDisplayedChildren = (nodes) => {
 }
 
 const getInitialState = () => {
-    var state = loadState(AUTOSAVE)
+    var state = loadState(getLastActiveProject())
     if (!state) {
         state = [rootNode]
     }

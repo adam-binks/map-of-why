@@ -25,6 +25,7 @@ export function MenuButtons() {
             toast.success(`Loaded '${selection.value}'`)
         } else {
             // duplicate current project by saving as new project name
+            // TODO disallow duplicate project names
             saveState(nodes, selection.value) // save the existing nodes to the new project
             toast.success(`Saved project as '${selection.value}'`)
         }

@@ -24,7 +24,10 @@ export function ValueIcon(props) {
                     }}
                     set="google"
                     showPreview={false}
-                    showSkinTones={false} />
+                    showSkinTones={false} 
+                    recent={['star', 'muscle', 'heart', 'rainbow', 'hugging_face', 'person_climbing', 'family', 'money_with_wings',
+                            'sunglasses', 'brain', 'books', 'smile', 'scales', 'small_airplane', 'seedling', 'sleeping', 'dart', 'art']}
+                />
             </div>
 
         }

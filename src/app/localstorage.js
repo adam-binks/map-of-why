@@ -35,6 +35,7 @@ export const getSaveNames = () => {
     if (saves) {
         return Object.keys(saves)
     }
+    return [AUTOSAVE]
 }
 
 export const getLastActiveProject = () => {

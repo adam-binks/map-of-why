@@ -1,7 +1,14 @@
 .menuDiv {
-    width: 20%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 200px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    text-align: left;
+}
+
+.menuDiv label {
+    color: grey;
+    font-size: small;
 }
 
 .select {

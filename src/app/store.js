@@ -16,8 +16,6 @@ export var AUTOSAVE_PROPS = {paused: false}
 const throttledSave = throttle(() => {
     if (!AUTOSAVE_PROPS.paused) {
         saveState(store.getState().nodes, store.getState().navigation.activeProject)
-    } else {
-        console.log("autosave paused")
     }
 }, 1000) // autosave interval
 

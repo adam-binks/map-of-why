@@ -110,7 +110,6 @@ export const nodeSlice = createSlice({
 
     reducers: {
         projectLoaded: (_, action) => {
-            console.log('load: ' + action.payload.loadedNodes);
             return action.payload.loadedNodes // replace current state with loaded nodes
         },
 

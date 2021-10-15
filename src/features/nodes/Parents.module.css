@@ -1,4 +1,6 @@
 .parentArea {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     left: -15%;
     height: 100%;
@@ -8,6 +10,7 @@
 .parentIndicator {
     min-width: 5px;
     min-height: 5px;
-    background-color: honeydew;
+    background-color: yellow;
     font-size: smaller;
+    border-radius: 50%;
 }

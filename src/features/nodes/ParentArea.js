@@ -10,6 +10,8 @@ export function ParentArea(props) {
                 <div className={styles.parentIndicator} key={parent.id}></div>
             )}
             <div className={styles.parentIndicator}>➕</div>
+            <div className={styles.parentIndicator}>2</div>
+            <div className={styles.parentIndicator}>3</div>
         </div>
     )
 }

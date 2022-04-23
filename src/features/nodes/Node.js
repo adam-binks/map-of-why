@@ -11,14 +11,18 @@ import styles from './Node.module.css';
 import 'emoji-mart/css/emoji-mart.css';
 import Reward from 'react-rewards';
 import { ParentArea } from './ParentArea';
+import Xarrow from "react-xarrows";
+import { Portal } from '@mui/base';
+
+const getNodeElementId = (node_id) => `node_${node_id}`
 
 export function Node(props) {
     const ref = useRef(null)
     const rewardRef = useRef(null)
     const dispatch = useDispatch()
-    
+
     const node = useSelector(state => state.nodes.find(node => node.id === props.id))
-    
+
     const parents = useSelector(state => node?.parents.map(parentId => state.nodes.find(n => n.id === parentId)))
     const nonDisplayedParents = parents.filter(parent => !parent.displayedChildren.includes(node.id))
 
@@ -98,11 +102,13 @@ export function Node(props) {
 
     drag(drop(ref))
     return (
-        <div
+        <><div
+            id={getNodeElementId(node.id)}
             className={styles.nodeWrapper + (isDragging ? " " + styles.isDragging : "")}
             style={{ 'zoom': props.zoom }}
         >
-            <ParentArea parents={nonDisplayedParents} />
+            {/* <ParentArea parents={nonDisplayedParents} /> */}
+
             <Reward
                 ref={rewardRef}
                 type='emoji'
@@ -141,6 +147,23 @@ export function Node(props) {
                 </div>
             </Reward>
         </div>
+            {parents.map(parent =>
+                // <Portal>
+                    <Xarrow
+                        key={`arrow ${node.id} -> ${parent.id}`}
+                        start={getNodeElementId(node.id)}
+                        end={getNodeElementId(parent.id)}
+                        headSize={2}
+                        color={"green"}
+                    // passProps={{
+                    //     className: className,
+                    //     onMouseEnter: () => dispatch(hoverUpdated({ entity: "arrow", source: source_id, dest: dest_id })),
+                    //     onMouseLeave: () => dispatch(stoppedHovering({ entity: "arrow", source: source_id, dest: dest_id }))
+                    // }}
+                    />
+                // </Portal>
+            )}
+        </>
     )
 }
 

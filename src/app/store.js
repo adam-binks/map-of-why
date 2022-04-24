@@ -3,6 +3,8 @@ import nodesReducer from '../features/nodes/nodesSlice';
 import navigationReducer from '../features/navigation/navigationSlice';
 import { saveState } from './localstorage';
 import { throttle } from 'lodash';
+import { updateFirebaseProject } from './firebase';
+import initSubscriber from 'redux-subscriber';
 
 export const store = configureStore({
     reducer: {
@@ -13,10 +15,23 @@ export const store = configureStore({
 
 export var AUTOSAVE_PROPS = {paused: false}
 
-const throttledSave = throttle(() => {
-    if (!AUTOSAVE_PROPS.paused) {
-        saveState(store.getState().nodes, store.getState().navigation.activeProject)
-    }
-}, 1000) // autosave interval
+// const throttledLocalStorageSave = throttle(() => {
+//     if (!AUTOSAVE_PROPS.paused) {
+//         saveState(store.getState().nodes, store.getState().navigation.activeProject)
+//     }
+// }, 1000) // autosave interval
+// store.subscribe(throttledLocalStorageSave)
 
-store.subscribe(throttledSave)
+const throttledFirebaseSave = throttle(() => {
+    if (!AUTOSAVE_PROPS.paused && store.getState().nodes !== "loading") {
+        updateFirebaseProject(store.getState().navigation.activeProject, store.getState().nodes)
+        console.log("updated project " + store.getState().navigation.activeProject);
+    }
+}, 5000) // autosave interval
+
+const subscribe = initSubscriber(store)
+
+subscribe('nodes', (state) => {console.log("sub"); throttledFirebaseSave()})
+
+// const watchNodes = watch(store.getState)
+// store.subscribe(watchNodes((newValue, oldValue, pathToField) => throttledFirebaseSave))

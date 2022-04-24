@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { nodeAdded } from './nodesSlice';
 import { ItemTypes } from '../../DragItemTypes';
 import { throttledReorderNode } from './Node';
+import styles from './Tree.module.css';
 
 export function AddChildButton(props) {
     const ref = useRef(null)
@@ -39,8 +40,9 @@ export function AddChildButton(props) {
     return (
         <div
             ref={ref}
+            className={styles.addChildButton} 
             data-handler-id={handlerId} // drop zone
-            style={{ 'zoom': props.zoom}}
+            style={{ 'zoom': props.zoom, 'width': props.width}}
         >
             <button onClick={addNode}>➕</button>
         </div>

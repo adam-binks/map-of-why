@@ -1,6 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Please from 'pleasejs'
+import { getFirebaseProject } from '../../app/firebase';
 import { getLastActiveProject, loadState } from '../../app/localstorage';
+
+const USE_FIREBASE = true
 
 // values are incomplete - to be used with spread operator
 const getDefaultNode = () => {
@@ -17,6 +20,10 @@ const rootNode = {
     label: 'Root',
     id: 'root',
     parents: [],
+}
+
+export const getDefaultState = () => {
+    return initialiseDisplayedChildren([rootNode])
 }
 
 const getNode = (state, id) => state.find(node => node.id === id)
@@ -48,7 +55,7 @@ const getAncestors = (nodes, id, ancestors) => {
     return ancestors
 }
 
-export const getValueAncestors = (nodes, id)  => {
+export const getValueAncestors = (nodes, id) => {
     return getAncestors(nodes, id, []).filter(ancestor => ancestor.isValue)
 }
 
@@ -100,13 +107,22 @@ const initialiseDisplayedChildren = (nodes) => {
     return nodes
 }
 
-const getInitialState = () => {
-    var state = loadState(getLastActiveProject())
+function getInitialState() {
+    var state = undefined
+    if (USE_FIREBASE) {
+        return "loading"
+    }
+
+    state = loadState(getLastActiveProject())
     if (!state) {
-        state = [rootNode]
+        state = getDefaultState()
     }
     return initialiseDisplayedChildren(state)
 }
+
+export const getFirebaseProjectThunk = createAsyncThunk("nodes/getFirebaseProject", async (projectId) => {
+    return await getFirebaseProject(projectId)
+})
 
 export const nodeSlice = createSlice({
     name: 'nodes',
@@ -193,11 +209,17 @@ export const nodeSlice = createSlice({
             }
         },
     },
+    extraReducers(builder) {
+        builder.addCase(getFirebaseProjectThunk.fulfilled, (state, action) => {
+            console.log("thunking " + action.payload)
+            return action.payload
+        })
+    }
 })
 
 export const { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, valueIconUpdated, nodeReordered, nodeLabelUpdated, projectLoaded } = nodeSlice.actions
 
-export const selectMaxDepth = (state) => Math.max.apply(null, state.nodes.map(node => {
+export const selectMaxDepth = (state) => state.nodes !== "loading" && Math.max.apply(null, state.nodes.map(node => {
     var depth = 0
     var visited = [node]
     while (node && node.parents && node.parents.length && !visited.includes(node.parents[0])) {

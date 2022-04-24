@@ -84,3 +84,7 @@
 .tree>li.treeElement::after {
     display: none;
 }
+
+.addChildButton {
+    text-align: left;
+}

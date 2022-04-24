@@ -25,13 +25,10 @@ export var AUTOSAVE_PROPS = {paused: false}
 const throttledFirebaseSave = throttle(() => {
     if (!AUTOSAVE_PROPS.paused && store.getState().nodes !== "loading") {
         updateFirebaseProject(store.getState().navigation.activeProject, store.getState().nodes)
-        console.log("updated project " + store.getState().navigation.activeProject);
     }
 }, 5000) // autosave interval
 
 const subscribe = initSubscriber(store)
 
-subscribe('nodes', (state) => {console.log("sub"); throttledFirebaseSave()})
-
-// const watchNodes = watch(store.getState)
-// store.subscribe(watchNodes((newValue, oldValue, pathToField) => throttledFirebaseSave))
+// only save to firebase when nodes changes 
+subscribe('nodes', (state) => {throttledFirebaseSave()})

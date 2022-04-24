@@ -39,13 +39,13 @@ export function MenuButtons() {
     const activeProject = useSelector(selectActiveProject)
 
     return <div className={styles.menuDiv}>
-        <label htmlFor="loadProject">Load project</label>
+        {/* <label htmlFor="loadProject">Load project</label>
         <Creatable
             inputId="loadProject"
             className={styles.select}
             defaultValue={{value: activeProject, label: activeProject}}
             onChange={changeProject}
             options={saveNames.map(save => {return {value: save, label: save}})}
-        />
+        /> */}
     </div>
 }

@@ -17,6 +17,7 @@ function App() {
     useEffect(() => {
         dispatch(getFirebaseProjectThunk(params.projectId))
         dispatch(activeProjectUpdated({activeProject: params.projectId}))
+        localStorage.setItem("lastCreatedProject", params.projectId)
     })
 
     return (

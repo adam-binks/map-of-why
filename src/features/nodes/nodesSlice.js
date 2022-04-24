@@ -211,7 +211,6 @@ export const nodeSlice = createSlice({
     },
     extraReducers(builder) {
         builder.addCase(getFirebaseProjectThunk.fulfilled, (state, action) => {
-            console.log("thunking " + action.payload)
             return action.payload
         })
     }

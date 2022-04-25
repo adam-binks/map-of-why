@@ -39,7 +39,7 @@ export function MenuButtons() {
 
     // const activeProject = useSelector(selectActiveProject)
 
-    const canUndo = useSelector(state => state.nodes.past.length > 0 && !(state.nodes.past.length === 1 && state.nodes.past[0] === ["loading"]))
+    const canUndo = useSelector(state => state.nodes.past.length > 0 && !(state.nodes.past.length === 1 && (state.nodes.past[0] === "loading" || state.nodes.past === "loading")))
     const canRedo = useSelector(state => state.nodes.future.length > 0)
     return <div className={styles.menuDiv}>
         <button className='pure-button dark-button' onClick={() => dispatch(ActionCreators.undo())} disabled={!canUndo}>

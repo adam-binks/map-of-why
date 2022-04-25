@@ -28,6 +28,9 @@ export async function createFirebaseProject(nodes) {
 }
 
 export async function updateFirebaseProject(projectId, nodes) {
+    if (nodes === "loading" || nodes?.present === "loading") {
+        return;
+    }
     try {
         await setDoc(doc(db, "projects", projectId), {"nodes": nodes.present})
     } catch (e) {

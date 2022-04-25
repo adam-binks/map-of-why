@@ -40,6 +40,7 @@ export default function Homepage() {
                     </button>
                 }
                 <p>This is an early version, it's not feature complete. For now, use it on desktop, not mobile.</p>
+                <p>No need to log in. To find your map in the future, bookmark your unique map URL which is generated when you get started.</p>
                 <p>I would love your feedback - <a href="https://twitter.com/adambinks_">DM me on Twitter</a>.</p>
                 <GitHubButton href="https://github.com/adam-binks/goal-tracker" data-size="large" data-show-count="true" 
                     aria-label="Star adam-binks/goal-tracker on GitHub">Star</GitHubButton>

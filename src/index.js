@@ -11,7 +11,7 @@ import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <BrowserRouter>
+            <BrowserRouter basename='goal-tracker'>
                 <Routes>
                     <Route path="/" element={<Homepage />} />
                     <Route path="/projects" element={<Outlet />}>

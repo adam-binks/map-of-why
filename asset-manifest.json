@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/goal-tracker/static/css/main.74f7456a.chunk.css",
-    "main.js": "/goal-tracker/static/js/main.85b88c1c.chunk.js",
-    "main.js.map": "/goal-tracker/static/js/main.85b88c1c.chunk.js.map",
+    "main.css": "/goal-tracker/static/css/main.5f89942e.chunk.css",
+    "main.js": "/goal-tracker/static/js/main.dafa7b44.chunk.js",
+    "main.js.map": "/goal-tracker/static/js/main.dafa7b44.chunk.js.map",
     "runtime-main.js": "/goal-tracker/static/js/runtime-main.5c4bd28f.js",
     "runtime-main.js.map": "/goal-tracker/static/js/runtime-main.5c4bd28f.js.map",
     "static/css/2.aaf6c238.chunk.css": "/goal-tracker/static/css/2.aaf6c238.chunk.css",
@@ -10,14 +10,14 @@
     "static/js/2.08f1dbde.chunk.js.map": "/goal-tracker/static/js/2.08f1dbde.chunk.js.map",
     "index.html": "/goal-tracker/index.html",
     "static/css/2.aaf6c238.chunk.css.map": "/goal-tracker/static/css/2.aaf6c238.chunk.css.map",
-    "static/css/main.74f7456a.chunk.css.map": "/goal-tracker/static/css/main.74f7456a.chunk.css.map",
+    "static/css/main.5f89942e.chunk.css.map": "/goal-tracker/static/css/main.5f89942e.chunk.css.map",
     "static/js/2.08f1dbde.chunk.js.LICENSE.txt": "/goal-tracker/static/js/2.08f1dbde.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.5c4bd28f.js",
     "static/css/2.aaf6c238.chunk.css",
     "static/js/2.08f1dbde.chunk.js",
-    "static/css/main.74f7456a.chunk.css",
-    "static/js/main.85b88c1c.chunk.js"
+    "static/css/main.5f89942e.chunk.css",
+    "static/js/main.dafa7b44.chunk.js"
   ]
 }

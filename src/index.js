@@ -21,8 +21,8 @@ ReactDOM.render(
                     </Route>
                     <Route path="*"
                         element={
-                            <main style={{ padding: "1rem" }}>
-                                <p>There's nothing here!</p>
+                            <main style={{ padding: "1rem", textAlign: "center" }}>
+                                <h2>Error 404! <Link to="/">Go back</Link></h2>
                             </main>
                         }
                     />

@@ -44,7 +44,7 @@ export function AddChildButton(props) {
             data-handler-id={handlerId} // drop zone
             style={{ 'zoom': props.zoom, 'width': props.width}}
         >
-            <button onClick={addNode}>➕</button>
+            <button className='pure-button' onClick={addNode}>➕</button>
         </div>
     )
 }

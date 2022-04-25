@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Please from 'pleasejs'
+import undoable from 'redux-undo';
 import { getFirebaseProject } from '../../app/firebase';
 import { getLastActiveProject, loadState } from '../../app/localstorage';
 
@@ -23,7 +24,7 @@ const rootNode = {
 }
 
 export const getDefaultState = () => {
-    return initialiseDisplayedChildren([rootNode])
+    return {present: initialiseDisplayedChildren([rootNode])}
 }
 
 const getNode = (state, id) => state.find(node => node.id === id)
@@ -218,11 +219,11 @@ export const nodeSlice = createSlice({
 
 export const { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, valueIconUpdated, nodeReordered, nodeLabelUpdated, projectLoaded } = nodeSlice.actions
 
-export const selectMaxDepth = (state) => state.nodes !== "loading" && Math.max.apply(null, state.nodes.map(node => {
+export const selectMaxDepth = (state) => state.nodes.present !== "loading" && Math.max.apply(null, state.nodes.present.map(node => {
     var depth = 0
     var visited = [node]
     while (node && node.parents && node.parents.length && !visited.includes(node.parents[0])) {
-        node = getNode(state.nodes, node.parents[0])
+        node = getNode(state.nodes.present, node.parents[0])
         visited.push(node)
         depth++
     }
@@ -230,4 +231,4 @@ export const selectMaxDepth = (state) => state.nodes !== "loading" && Math.max.a
 }))
 
 
-export default nodeSlice.reducer
+export default undoable(nodeSlice.reducer)

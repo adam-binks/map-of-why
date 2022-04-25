@@ -8,7 +8,7 @@ import { AddChildButton } from './AddChildButton';
 const targetWidth = 200 // ideally every node in the tree would be this width, to be readable
 
 export function Tree() {
-    const nodes = useSelector(state => state.nodes)
+    const nodes = useSelector(state => state.nodes.present)
 
     const maxDepth = useSelector(selectMaxDepth)
     const focussedDepth = Math.min(useSelector(state => state.navigation.focussedDepth), maxDepth)

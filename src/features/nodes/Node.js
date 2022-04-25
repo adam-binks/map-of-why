@@ -15,9 +15,9 @@ export function Node(props) {
     const ref = useRef(null)
     const rewardRef = useRef(null)
     const dispatch = useDispatch()
-    const node = useSelector(state => state.nodes.find(node => node.id === props.id))
+    const node = useSelector(state => state.nodes.present.find(node => node.id === props.id))
 
-    const valueAncestors = useSelector(state => getValueAncestors(state.nodes, node.id))
+    const valueAncestors = useSelector(state => getValueAncestors(state.nodes.present, node.id))
     const rewardEmojis = valueAncestors.length > 0 ? valueAncestors.map(ancestor => ancestor.valueIcon) : ["✔️", "✅", "🎉"]
 
     const onCheckboxChange = (e) => {
@@ -105,9 +105,9 @@ export function Node(props) {
                 className={styles.nodeWrapper + (isDragging ? " " + styles.isDragging : "")}
                 style={{ 'zoom': props.zoom}}
             >
-                <button className={styles.deleteNodeButton}
+                <button className={'pure-button padded-button ' + styles.deleteNodeButton}
                     onClick={() => dispatch(nodeDeleted({ id: node.id }))}>❌</button>
-                <button className={styles.toggleValueButton}
+                <button className={'pure-button padded-button ' + styles.toggleValueButton}
                     onClick={() => dispatch(nodeIsValueUpdated({ id: node.id, isValue: !node.isValue }))}>🔄</button>
 
                 <div
@@ -131,7 +131,7 @@ export function Node(props) {
                         minRows={1}
                         maxRows={5}
                         autoFocus={true}
-                        placeholder={"Enter a title for this " + (node.isValue ? "value" : "task") + "..."}
+                        placeholder={"Enter a " + (node.isValue ? "value" : "task") + "..."}
                     />
                 </div>
             </div>

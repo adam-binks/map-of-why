@@ -25,7 +25,7 @@ function App() {
             <DndProvider backend={HTML5Backend}>
                 <div className="App">
                     <MenuButtons />
-                    <Link to={"/"}><h2>Goal Tracker</h2></Link>
+                    <Link to={"/"}><h1>Goal Tracker</h1></Link>
                     <Tree />
                     <ToastContainer
                         position="bottom-right"

@@ -5,7 +5,7 @@
     min-width: 80px; */
     width: 200px;
 
-    padding: 5px;
+    padding: 8px;
     border-radius: 4px;
     border: 2px solid grey;
     text-align: left;
@@ -39,7 +39,8 @@
 .nodeLabel {
     resize: none;
     margin: auto;
-    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 5px;
+    /* font-family: Arial, Helvetica, sans-serif; */
     background-color: transparent;
     border: 0 none;
     outline: none;

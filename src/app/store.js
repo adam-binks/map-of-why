@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import nodesReducer from '../features/nodes/nodesSlice';
 import navigationReducer from '../features/navigation/navigationSlice';
-import { saveState } from './localstorage';
 import { throttle } from 'lodash';
 import { updateFirebaseProject } from './firebase';
 import initSubscriber from 'redux-subscriber';

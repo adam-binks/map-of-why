@@ -47,7 +47,7 @@ export default function Homepage() {
                 <h2>How to use it</h2>
                 <p>Play around and see what works for you!</p>
                 <p>✅ Things like "climb a tree" are tasks, with a checkbox.</p>
-                <p>💪 Things like "stay fit" are <i>values</i>. Turn a task into a value by clicking 🔄.</p>
+                <p>💪 Things like "be healthy" are <i>values</i>. Turn a task into a value by clicking 🔄.</p>
                 <p>One recipe for how to use this tool:</p>
                 <ol>
                     <li>List the things you value intrinsically</li>
@@ -56,6 +56,7 @@ export default function Homepage() {
                 </ol>
                 <p>Not sure what you value intrinsically? Try <a href="https://programs.clearerthinking.org/intrinsic_values_test.html">this test</a>. Or
                     go for a long walk on the beach.</p>
+                <p style={{textAlign: "center", color: 'grey', fontSize: "150%"}}>Made by <a href="https://adambinks.me">Adam Binks</a>.</p>
             </div>
         </>
     )

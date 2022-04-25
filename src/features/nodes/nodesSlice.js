@@ -11,7 +11,7 @@ const getDefaultNode = () => {
     return {
         label: "",
         completed: false,
-        isValue: false,
+        // isValue: false,
         valueIcon: '⭐',
         displayedChildren: [],
     }
@@ -135,11 +135,13 @@ export const nodeSlice = createSlice({
         },
 
         nodeAdded: (state, action) => {
-            const { id, parents } = action.payload
+            const { id, parents, isValue } = action.payload
             var newNode = {
                 ...getDefaultNode(),
                 id: id,
                 parents: parents,
+                isValue: isValue,
+                valueColour: isValue && getNewNodeColour(state.nodes),
             }
             state.push(newNode)
 

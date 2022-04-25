@@ -7,7 +7,7 @@
 
     padding: 8px;
     border-radius: 4px;
-    border: 2px solid grey;
+    /* border: 2px solid rgb(179, 179, 179); */
     text-align: left;
 
     transition: all 0.2s ease-out;
@@ -54,6 +54,7 @@
 .valueIcon {
     font-size: large;
     height: fit-content;
+    padding: 5px;
 }
 
 .emojiPicker {

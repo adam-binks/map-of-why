@@ -6,19 +6,17 @@ import Homepage from './features/homepage/Homepage';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
+import { HashRouter, Routes, Route, Link } from "react-router-dom";
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <BrowserRouter basename='goal-tracker'>
+            <HashRouter>
                 <Routes>
                     <Route path="/" element={<Homepage />} />
-                    <Route path="/projects" element={<Outlet />}>
-                        <Route path=":projectId" element={
-                            <App />
-                        } />
-                    </Route>
+                    <Route exact path="/projects/:projectId" element={
+                        <App />
+                    } />
                     <Route path="*"
                         element={
                             <main style={{ padding: "1rem", textAlign: "center" }}>
@@ -27,7 +25,7 @@ ReactDOM.render(
                         }
                     />
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

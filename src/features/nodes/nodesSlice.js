@@ -72,7 +72,7 @@ const isDisplayedDescendantOf = (nodes, descendant, ancestor) => {
 
 const getNewNodeColour = (nodes) => {
     const opt = {
-        'value': 0.9
+        'value': 0.95
     }
     // const initialPallet = [
     //     'green',

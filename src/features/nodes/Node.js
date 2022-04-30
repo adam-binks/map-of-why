@@ -1,15 +1,15 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
-import TextareaAutosize from 'react-textarea-autosize';
 import { throttle } from 'lodash';
-import { nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, nodeReordered, nodeLabelUpdated, getValueAncestors } from './nodesSlice';
+import { nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, nodeReordered, getValueAncestors } from './nodesSlice';
 import { ValueIcon } from './ValueIcon';
 import { ItemTypes } from '../../DragItemTypes';
 import { focussedDepthUpdated } from '../navigation/navigationSlice';
 import styles from './Node.module.css';
 import 'emoji-mart/css/emoji-mart.css';
 import Reward from 'react-rewards';
+import { NodeLabel } from './NodeLabel';
 
 export function Node(props) {
     const ref = useRef(null)
@@ -124,15 +124,7 @@ export function Node(props) {
                             checked={node.completed}
                             onChange={onCheckboxChange}
                         />}
-                    <TextareaAutosize
-                        className={styles.nodeLabel}
-                        value={node.label}
-                        onChange={(e) => dispatch(nodeLabelUpdated({id: node.id, label: e.target.value}))}
-                        minRows={1}
-                        maxRows={5}
-                        autoFocus={true}
-                        placeholder={"Enter a " + (node.isValue ? "value" : "task") + "..."}
-                    />
+                    <NodeLabel node={node}/>
                 </div>
             </div>
         </Reward>

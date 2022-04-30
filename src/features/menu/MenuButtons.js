@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 import { ActionCreators } from 'redux-undo';
 // import Creatable from 'react-select/creatable';
 // import { toast } from 'react-toastify';
@@ -42,6 +43,17 @@ export function MenuButtons() {
     const canUndo = useSelector(state => state.nodes.past.length > 0 && !(state.nodes.past.length === 1 && (state.nodes.past[0] === "loading" || state.nodes.past === "loading")))
     const canRedo = useSelector(state => state.nodes.future.length > 0)
     return <div className={styles.menuDiv}>
+        <>
+            <a data-tip="React-tooltip" style={{marginRight: "5px", marginTop: "7px", fontSize: "larger"}}> ⌨ </a>
+            <ReactTooltip place="bottom" type="dark" effect="solid">
+                <b>Keyboard shortcuts</b><br/><br/>
+                <i>When editing a task:</i><br/>
+                <b>Enter</b>: add another task<br/>
+                <b>Ctrl-Enter</b>: add a subtask<br/>
+                <b>Shift-Enter</b>: add a new line<br/>
+            </ReactTooltip>
+        </>
+
         <button className='pure-button dark-button' onClick={() => dispatch(ActionCreators.undo())} disabled={!canUndo}>
             Undo
         </button>

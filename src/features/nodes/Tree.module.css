@@ -95,12 +95,12 @@
 
 .addChildButton button {
     padding: 3px;
-    opacity: 50%;
+    opacity: .5;
     transition-property: 'opacity';
     transition-duration: 0.2s;
 }
 
 .addChildButton button:hover {
     padding: 3px;
-    opacity: 100%;
+    opacity: 1;
 }

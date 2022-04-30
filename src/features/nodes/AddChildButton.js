@@ -15,7 +15,6 @@ export function AddChildButton(props) {
         dispatch(nodeAdded({
             id: nanoid(),
             parents: [props.parent],
-            isValue: props.parent === "root",
         }))
     }
 

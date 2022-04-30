@@ -135,7 +135,10 @@ export const nodeSlice = createSlice({
         },
 
         nodeAdded: (state, action) => {
-            const { id, parents, isValue } = action.payload
+            const { id, parents } = action.payload
+
+            const isValue = action.payload.isValue !== undefined ? action.payload.isValue : (parents.length === 1 && parents[0] === "root")
+
             var newNode = {
                 ...getDefaultNode(),
                 id: id,
@@ -146,7 +149,14 @@ export const nodeSlice = createSlice({
             state.push(newNode)
 
             if (parents.length > 0) {
-                getNode(state, parents[0]).displayedChildren.push(id)
+                const displayedChildren = getNode(state, parents[0]).displayedChildren
+                const insertAfter = action.payload.insertAfter
+                if (insertAfter && displayedChildren.indexOf(insertAfter) !== -1) {
+                    displayedChildren.splice(displayedChildren.indexOf(insertAfter) + 1, 0, id) // insert at index
+                }
+                else {
+                    displayedChildren.push(id)
+                }
             }
 
             const valueAncestors = getValueAncestors(state, id)

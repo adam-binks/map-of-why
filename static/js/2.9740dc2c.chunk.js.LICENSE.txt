@@ -13,12 +13,6 @@ object-assign
      License: MIT, header required.
      */
 
-/*!
- * github-buttons v2.21.1
- * (c) 2021 なつき
- * @license BSD-2-Clause
- */
-
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use

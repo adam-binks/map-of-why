@@ -41,7 +41,7 @@ export default function Homepage() {
                 <p>This is an early version, it's not feature complete. For now, use it on desktop, not mobile.</p>
                 <p>No need to log in. To find your map in the future, bookmark your unique map URL which is generated when you get started.</p>
                 <p>I would love your feedback - <a href="https://twitter.com/adambinks_">message me on Twitter</a>.</p>
-                <p>The <a href="https://github.com/adam-binks/goal-tracker">code is on GitHub</a>.</p>
+                <p>The <a href="https://github.com/adam-binks/map-of-why">code is on GitHub</a>.</p>
 
                 <h2>How to use it</h2>
                 <p>Play around and see what works for you!</p>

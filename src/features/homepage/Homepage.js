@@ -23,7 +23,7 @@ export default function Homepage() {
     return (
         <>
             <div className={styles.content}>
-                <h1>Goal tracker</h1>
+                <h1>Map of Why</h1>
                 <p>Visualise how your daily to-do list contributes to your ultimate life goals.</p>
                 {existingProjectId ?
                     <>

@@ -20,7 +20,7 @@ const projects = collection(db, 'projects')
 
 export async function createFirebaseProject(nodes) {
     try {
-        const docRef = await addDoc(projects, {"nodes": nodes.present})
+        const docRef = await addDoc(projects, { "nodes": nodes.present })
         return docRef
     } catch (e) {
         toast.error("Error creating project: " + e)
@@ -32,7 +32,7 @@ export async function updateFirebaseProject(projectId, nodes) {
         return;
     }
     try {
-        await setDoc(doc(db, "projects", projectId), {"nodes": nodes.present})
+        await setDoc(doc(db, "projects", projectId), { "nodes": nodes.present, "lastModified": new Date().toISOString() })
     } catch (e) {
         toast.error("Error saving project: " + e)
     }

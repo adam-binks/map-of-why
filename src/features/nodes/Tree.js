@@ -4,6 +4,7 @@ import { selectMaxDepth } from './nodesSlice';
 import styles from './Tree.module.css';
 import { Node } from './Node';
 import { AddChildButton } from './AddChildButton';
+import Arrow from './Arrow';
 
 const targetWidth = 200 // ideally every node in the tree would be this width, to be readable
 
@@ -81,6 +82,7 @@ export function Tree() {
     return (
         <div className={styles.treeContainer}>
             {getDisplayedChildrenList(0, 'root')}
+            <Arrow />
         </div>
     )
 }

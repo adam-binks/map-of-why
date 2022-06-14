@@ -44,7 +44,7 @@ export function MenuButtons() {
     const canRedo = useSelector(state => state.nodes.future.length > 0)
     return <div className={styles.menuDiv}>
         <>
-            <a data-tip="React-tooltip" style={{marginRight: "5px", marginTop: "7px", fontSize: "larger"}}> ⌨ </a>
+            <a data-tip="React-tooltip" href="#" onClick={(e) => e.preventDefault()} className={styles.keyboardShortcutIcon}> ⌨ </a>
             <ReactTooltip place="bottom" type="dark" effect="solid">
                 <b>Keyboard shortcuts</b><br/><br/>
                 <i>When editing a task:</i><br/>

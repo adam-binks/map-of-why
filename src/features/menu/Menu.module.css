@@ -16,3 +16,10 @@
 .select {
     text-align: left;
 }
+
+.keyboardShortcutIcon {
+    margin-right: 5px;
+    margin-top: 7px;
+    font-size: larger;
+    cursor: help;
+}

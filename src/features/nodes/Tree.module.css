@@ -18,6 +18,7 @@
 .tree * {
     margin: 0;
     padding: 0;
+    border-color: #F48C06;
 }
 
 .tree li.treeElement {
@@ -36,6 +37,7 @@
     left: 0;
     top: 50%;
     border-top: 1px solid;
+    border-color: inherit;
     width: var(--tree-spacing-x);
 }
 
@@ -44,6 +46,7 @@
     position: absolute;
     left: 0;
     border-left: 1px solid;
+    border-color: inherit;
 }
 
 .tree li.treeElement:last-of-type:not(:only-of-type)::after {
@@ -73,6 +76,7 @@
     left: 0;
     top: 50%;
     border-top: 1px solid;
+    border-color: inherit;
     width: var(--tree-spacing-x);
 }
 
@@ -83,4 +87,20 @@
 .tree>li.treeElement::before,
 .tree>li.treeElement::after {
     display: none;
+}
+
+.addChildButton {
+    text-align: left;
+}
+
+.addChildButton button {
+    padding: 3px;
+    opacity: .5;
+    transition-property: 'opacity';
+    transition-duration: 0.2s;
+}
+
+.addChildButton button:hover {
+    padding: 3px;
+    opacity: 1;
 }

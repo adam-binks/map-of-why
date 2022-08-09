@@ -1,28 +1,35 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
-import TextareaAutosize from 'react-textarea-autosize';
 import { throttle } from 'lodash';
-import { nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, nodeReordered, nodeLabelUpdated, getValueAncestors } from './nodesSlice';
+import { nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, nodeReordered, getValueAncestors } from './nodesSlice';
 import { ValueIcon } from './ValueIcon';
 import { ItemTypes } from '../../DragItemTypes';
 import { focussedDepthUpdated } from '../navigation/navigationSlice';
 import styles from './Node.module.css';
 import 'emoji-mart/css/emoji-mart.css';
 import Reward from 'react-rewards';
+<<<<<<< HEAD
 import { ParentArea } from './ParentArea';
+=======
+import { NodeLabel } from './NodeLabel';
+>>>>>>> 7b631a833a19af8a0aeaf54f70d3054e66b0718a
 
 export function Node(props) {
     const ref = useRef(null)
     const rewardRef = useRef(null)
     const dispatch = useDispatch()
+<<<<<<< HEAD
     
     const node = useSelector(state => state.nodes.find(node => node.id === props.id))
     
     const parents = useSelector(state => node?.parents.map(parentId => state.nodes.find(n => n.id === parentId)))
     const nonDisplayedParents = parents.filter(parent => !parent.displayedChildren.includes(node.id))
+=======
+    const node = useSelector(state => state.nodes.present.find(node => node.id === props.id))
+>>>>>>> 7b631a833a19af8a0aeaf54f70d3054e66b0718a
 
-    const valueAncestors = useSelector(state => getValueAncestors(state.nodes, node.id))
+    const valueAncestors = useSelector(state => getValueAncestors(state.nodes.present, node.id))
     const rewardEmojis = valueAncestors.length > 0 ? valueAncestors.map(ancestor => ancestor.valueIcon) : ["✔️", "✅", "🎉"]
 
     const onCheckboxChange = (e) => {
@@ -111,9 +118,9 @@ export function Node(props) {
                     lifetime: 150,
                 }}
             >
-                <button className={styles.deleteNodeButton}
+                <button className={'pure-button padded-button ' + styles.deleteNodeButton}
                     onClick={() => dispatch(nodeDeleted({ id: node.id }))}>❌</button>
-                <button className={styles.toggleValueButton}
+                <button className={'pure-button padded-button ' + styles.toggleValueButton}
                     onClick={() => dispatch(nodeIsValueUpdated({ id: node.id, isValue: !node.isValue }))}>🔄</button>
                 <div
                     ref={ref} // drag this
@@ -129,6 +136,7 @@ export function Node(props) {
                             checked={node.completed}
                             onChange={onCheckboxChange}
                         />}
+<<<<<<< HEAD
                     <TextareaAutosize
                         className={styles.nodeLabel}
                         value={node.label}
@@ -138,6 +146,9 @@ export function Node(props) {
                         autoFocus={true}
                         placeholder={"Enter a title for this " + (node.isValue ? "value" : "task") + "..."}
                     />
+=======
+                    <NodeLabel node={node}/>
+>>>>>>> 7b631a833a19af8a0aeaf54f70d3054e66b0718a
                 </div>
             </Reward>
         </div>

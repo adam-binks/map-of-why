@@ -1,13 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Please from 'pleasejs'
+import undoable from 'redux-undo';
+import { getFirebaseProject } from '../../app/firebase';
 import { getLastActiveProject, loadState } from '../../app/localstorage';
+
+const USE_FIREBASE = true
 
 // values are incomplete - to be used with spread operator
 const getDefaultNode = () => {
     return {
         label: "",
         completed: false,
-        isValue: false,
+        // isValue: false,
         valueIcon: '⭐',
         displayedChildren: [],
     }
@@ -17,6 +21,10 @@ const rootNode = {
     label: 'Root',
     id: 'root',
     parents: [],
+}
+
+export const getDefaultState = () => {
+    return {present: initialiseDisplayedChildren([rootNode])}
 }
 
 const getNode = (state, id) => state.find(node => node.id === id)
@@ -48,7 +56,7 @@ const getAncestors = (nodes, id, ancestors) => {
     return ancestors
 }
 
-export const getValueAncestors = (nodes, id)  => {
+export const getValueAncestors = (nodes, id) => {
     return getAncestors(nodes, id, []).filter(ancestor => ancestor.isValue)
 }
 
@@ -64,7 +72,7 @@ const isDisplayedDescendantOf = (nodes, descendant, ancestor) => {
 
 const getNewNodeColour = (nodes) => {
     const opt = {
-        'value': 0.9
+        'value': 0.95
     }
     // const initialPallet = [
     //     'green',
@@ -100,13 +108,22 @@ const initialiseDisplayedChildren = (nodes) => {
     return nodes
 }
 
-const getInitialState = () => {
-    var state = loadState(getLastActiveProject())
+function getInitialState() {
+    var state = undefined
+    if (USE_FIREBASE) {
+        return "loading"
+    }
+
+    state = loadState(getLastActiveProject())
     if (!state) {
-        state = [rootNode]
+        state = getDefaultState()
     }
     return initialiseDisplayedChildren(state)
 }
+
+export const getFirebaseProjectThunk = createAsyncThunk("nodes/getFirebaseProject", async (projectId) => {
+    return await getFirebaseProject(projectId)
+})
 
 export const nodeSlice = createSlice({
     name: 'nodes',
@@ -119,15 +136,27 @@ export const nodeSlice = createSlice({
 
         nodeAdded: (state, action) => {
             const { id, parents } = action.payload
+
+            const isValue = action.payload.isValue !== undefined ? action.payload.isValue : (parents.length === 1 && parents[0] === "root")
+
             var newNode = {
                 ...getDefaultNode(),
                 id: id,
                 parents: parents,
+                isValue: isValue,
+                valueColour: isValue && getNewNodeColour(state.nodes),
             }
             state.push(newNode)
 
             if (parents.length > 0) {
-                getNode(state, parents[0]).displayedChildren.push(id)
+                const displayedChildren = getNode(state, parents[0]).displayedChildren
+                const insertAfter = action.payload.insertAfter
+                if (insertAfter && displayedChildren.indexOf(insertAfter) !== -1) {
+                    displayedChildren.splice(displayedChildren.indexOf(insertAfter) + 1, 0, id) // insert at index
+                }
+                else {
+                    displayedChildren.push(id)
+                }
             }
 
             const valueAncestors = getValueAncestors(state, id)
@@ -193,15 +222,20 @@ export const nodeSlice = createSlice({
             }
         },
     },
+    extraReducers(builder) {
+        builder.addCase(getFirebaseProjectThunk.fulfilled, (state, action) => {
+            return action.payload
+        })
+    }
 })
 
 export const { nodeAdded, nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, valueIconUpdated, nodeReordered, nodeLabelUpdated, projectLoaded } = nodeSlice.actions
 
-export const selectMaxDepth = (state) => Math.max.apply(null, state.nodes.map(node => {
+export const selectMaxDepth = (state) => state.nodes.present !== "loading" && Math.max.apply(null, state.nodes.present.map(node => {
     var depth = 0
     var visited = [node]
     while (node && node.parents && node.parents.length && !visited.includes(node.parents[0])) {
-        node = getNode(state.nodes, node.parents[0])
+        node = getNode(state.nodes.present, node.parents[0])
         visited.push(node)
         depth++
     }
@@ -209,4 +243,4 @@ export const selectMaxDepth = (state) => Math.max.apply(null, state.nodes.map(no
 }))
 
 
-export default nodeSlice.reducer
+export default undoable(nodeSlice.reducer)

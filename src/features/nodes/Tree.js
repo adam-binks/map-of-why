@@ -4,14 +4,16 @@ import { selectMaxDepth } from './nodesSlice';
 import styles from './Tree.module.css';
 import { Node } from './Node';
 import { AddChildButton } from './AddChildButton';
+import Arrow from './Arrow';
 
 const targetWidth = 200 // ideally every node in the tree would be this width, to be readable
 
 export function Tree() {
+    const nodes = useSelector(state => state.nodes.present)
+
     const maxDepth = useSelector(selectMaxDepth)
     const focussedDepth = Math.min(useSelector(state => state.navigation.focussedDepth), maxDepth)
     const widthsByDepth = getWidthsByDepth(focussedDepth, maxDepth)
-    const nodes = useSelector(state => state.nodes)
 
     const getDisplayedChildrenList = (current_depth, parent_id) => {
         var children;
@@ -24,8 +26,10 @@ export function Tree() {
 
         const zoom = parseFloat(widthsByDepth[current_depth]) / parseFloat(targetWidth)
 
-        const addChildButton = (index) => <li className={styles.treeElement} key={parent_id + "_addChild"}><AddChildButton parent={parent_id} index={index} 
-            zoom={zoom}/></li>
+        const addChildButton = (index) => 
+            <li className={styles.treeElement} key={parent_id + "_addChild"}>
+                <AddChildButton parent={parent_id} index={index} zoom={zoom} width={widthsByDepth[current_depth]}/>
+            </li>
 
         const wrapInUl = (elements) => <ul className={styles.treeElement + (parent_id === "root" ? " " + styles.tree : "")}>{elements}</ul>
 
@@ -71,9 +75,14 @@ export function Tree() {
         }
     })
 
+    if (nodes === "loading") {
+        return <p>Loading...</p>
+    }
+
     return (
         <div className={styles.treeContainer}>
             {getDisplayedChildrenList(0, 'root')}
+            <Arrow />
         </div>
     )
 }

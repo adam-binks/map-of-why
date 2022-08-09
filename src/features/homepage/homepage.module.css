@@ -1,0 +1,16 @@
+.content {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.homepageButtonPrimary {
+    font-size: 200%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.homepageButtonSecondary {
+    background: #6A040F !important;
+    margin-top: 10px;
+}

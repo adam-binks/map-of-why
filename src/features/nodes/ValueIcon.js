@@ -10,7 +10,7 @@ export function ValueIcon(props) {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
     return (<>
-        <button className={styles.valueIcon} onClick={() => setShowEmojiPicker(!showEmojiPicker)}>{props.emoji}</button>
+        <button className={'pure-button ' + styles.valueIcon} onClick={() => setShowEmojiPicker(!showEmojiPicker)}>{props.emoji}</button>
 
         {
             showEmojiPicker && <div className={styles.emojiPicker}>

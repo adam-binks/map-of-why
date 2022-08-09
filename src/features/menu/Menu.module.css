@@ -1,9 +1,11 @@
 .menuDiv {
-    width: 200px;
+    /* width: 200px; */
     position: absolute;
     right: 20px;
     top: 10px;
     text-align: left;
+    display: flex;
+    flex-direction: row;
 }
 
 .menuDiv label {
@@ -13,4 +15,11 @@
 
 .select {
     text-align: left;
+}
+
+.keyboardShortcutIcon {
+    margin-right: 5px;
+    margin-top: 7px;
+    font-size: larger;
+    cursor: help;
 }

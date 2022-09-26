@@ -1,33 +1,22 @@
-import React, { useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useDrag, useDrop } from 'react-dnd';
+import 'emoji-mart/css/emoji-mart.css';
 import { throttle } from 'lodash';
-import { nodeDeleted, nodeCompleteUpdated, nodeIsValueUpdated, nodeReordered, getValueAncestors } from './nodesSlice';
-import { ValueIcon } from './ValueIcon';
+import React, { useRef } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
+import { useDispatch, useSelector } from 'react-redux';
+import Reward from 'react-rewards';
 import { ItemTypes } from '../../DragItemTypes';
 import { focussedDepthUpdated } from '../navigation/navigationSlice';
 import styles from './Node.module.css';
-import 'emoji-mart/css/emoji-mart.css';
-import Reward from 'react-rewards';
-<<<<<<< HEAD
-import { ParentArea } from './ParentArea';
-=======
 import { NodeLabel } from './NodeLabel';
->>>>>>> 7b631a833a19af8a0aeaf54f70d3054e66b0718a
+import { getValueAncestors, nodeCompleteUpdated, nodeDeleted, nodeIsValueUpdated, nodeReordered } from './nodesSlice';
+import { USE_FISHEYE_ZOOM } from './Tree';
+import { ValueIcon } from './ValueIcon';
 
 export function Node(props) {
     const ref = useRef(null)
     const rewardRef = useRef(null)
     const dispatch = useDispatch()
-<<<<<<< HEAD
-    
-    const node = useSelector(state => state.nodes.find(node => node.id === props.id))
-    
-    const parents = useSelector(state => node?.parents.map(parentId => state.nodes.find(n => n.id === parentId)))
-    const nonDisplayedParents = parents.filter(parent => !parent.displayedChildren.includes(node.id))
-=======
     const node = useSelector(state => state.nodes.present.find(node => node.id === props.id))
->>>>>>> 7b631a833a19af8a0aeaf54f70d3054e66b0718a
 
     const valueAncestors = useSelector(state => getValueAncestors(state.nodes.present, node.id))
     const rewardEmojis = valueAncestors.length > 0 ? valueAncestors.map(ancestor => ancestor.valueIcon) : ["✔️", "✅", "🎉"]
@@ -107,9 +96,8 @@ export function Node(props) {
     return (
         <div
             className={styles.nodeWrapper + (isDragging ? " " + styles.isDragging : "")}
-            style={{ 'zoom': props.zoom }}
+            style={props.zoom ? { 'zoom': props.zoom } : {}}
         >
-            <ParentArea parents={nonDisplayedParents} />
             <Reward
                 ref={rewardRef}
                 type='emoji'
@@ -126,8 +114,10 @@ export function Node(props) {
                     ref={ref} // drag this
                     data-handler-id={handlerId} // dropzone
                     className={styles.node}
-                    style={{ 'width': props.width }}
-                    onMouseEnter={throttle(() => dispatch(focussedDepthUpdated({ 'focussedDepth': props.depth })), 50)}
+                    style={props.width ? { 'width': props.width } : {}}
+                    onMouseEnter={throttle(() => {
+                        USE_FISHEYE_ZOOM && dispatch(focussedDepthUpdated({ 'focussedDepth': props.depth }))
+                    }, 50)}
                 >
                     {node.isValue ?
                         <ValueIcon emoji={node.valueIcon} nodeId={node.id} />
@@ -136,19 +126,7 @@ export function Node(props) {
                             checked={node.completed}
                             onChange={onCheckboxChange}
                         />}
-<<<<<<< HEAD
-                    <TextareaAutosize
-                        className={styles.nodeLabel}
-                        value={node.label}
-                        onChange={(e) => dispatch(nodeLabelUpdated({ id: node.id, label: e.target.value }))}
-                        minRows={1}
-                        maxRows={5}
-                        autoFocus={true}
-                        placeholder={"Enter a title for this " + (node.isValue ? "value" : "task") + "..."}
-                    />
-=======
                     <NodeLabel node={node}/>
->>>>>>> 7b631a833a19af8a0aeaf54f70d3054e66b0718a
                 </div>
             </Reward>
         </div>

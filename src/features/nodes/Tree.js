@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { AddChildButton } from './AddChildButton';
+import { Node } from './Node';
 import { selectMaxDepth } from './nodesSlice';
 import styles from './Tree.module.css';
-import { Node } from './Node';
-import { AddChildButton } from './AddChildButton';
-import Arrow from './Arrow';
+
+export const USE_FISHEYE_ZOOM = false
 
 const targetWidth = 200 // ideally every node in the tree would be this width, to be readable
 
@@ -13,7 +14,7 @@ export function Tree() {
 
     const maxDepth = useSelector(selectMaxDepth)
     const focussedDepth = Math.min(useSelector(state => state.navigation.focussedDepth), maxDepth)
-    const widthsByDepth = getWidthsByDepth(focussedDepth, maxDepth)
+    const widthsByDepth = USE_FISHEYE_ZOOM && getWidthsByDepth(focussedDepth, maxDepth)
 
     const getDisplayedChildrenList = (current_depth, parent_id) => {
         var children;
@@ -24,14 +25,18 @@ export function Tree() {
             children = nodes.filter(node => node.parents.length === 0).map(node => node.id)
         }
 
-        const zoom = parseFloat(widthsByDepth[current_depth]) / parseFloat(targetWidth)
+        const zoom = USE_FISHEYE_ZOOM && parseFloat(widthsByDepth[current_depth]) / parseFloat(targetWidth)
 
-        const addChildButton = (index) => 
+        const addChildButton = (index) =>
             <li className={styles.treeElement} key={parent_id + "_addChild"}>
-                <AddChildButton parent={parent_id} index={index} zoom={zoom} width={widthsByDepth[current_depth]}/>
+                <AddChildButton parent={parent_id} index={index} zoom={zoom} width={widthsByDepth[current_depth]} />
             </li>
 
-        const wrapInUl = (elements) => <ul className={styles.treeElement + (parent_id === "root" ? " " + styles.tree : "")}>{elements}</ul>
+        const wrapInUl = (elements) => (
+            <ul className={styles.treeElement + (parent_id === "root" ? " " + styles.tree : "")}>
+                {elements}
+            </ul>
+        )
 
         if (!children || children.length === 0) {
             return wrapInUl(addChildButton(0))
@@ -39,9 +44,9 @@ export function Tree() {
 
         const list_elements = children.map((child, index) => {
             const grandchildren = getDisplayedChildrenList(current_depth + 1, child)
-            
+
             const childNode = nodes.find(node => node.id === child)
-            return (<li className={styles.treeElement} style={{...(childNode?.isValue ? {'--valueColour': childNode.valueColour} : {})}} key={child}>
+            return (<li className={styles.treeElement} style={{ ...(childNode?.isValue ? { '--valueColour': childNode.valueColour } : {}) }} key={child}>
                 <Node
                     id={child}
                     key={child}
@@ -82,12 +87,12 @@ export function Tree() {
     return (
         <div className={styles.treeContainer}>
             {getDisplayedChildrenList(0, 'root')}
-            <Arrow />
         </div>
     )
 }
 
 
+// This calculates the width of nodes, for the fish eye zoom
 const getWidthsByDepth = (focussedDepth, maxDepth) => {
     // calculate the widths of each depth of the nodes
     const numDepths = maxDepth + 1 // because depth is 0-indexed
@@ -151,10 +156,10 @@ const getWidthsByDepth = (focussedDepth, maxDepth) => {
 export function debounce(fn, ms) {
     let timer
     return _ => {
-      clearTimeout(timer)
-      timer = setTimeout(_ => {
-        timer = null
-        fn.apply(this, arguments)
-      }, ms)
+        clearTimeout(timer)
+        timer = setTimeout(_ => {
+            timer = null
+            fn.apply(this, arguments)
+        }, ms)
     };
-  }
+}

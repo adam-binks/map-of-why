@@ -4,12 +4,14 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
 
-test('renders learn react link', () => {
-  const { getByText } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
+// There are currently no tests - here's an example of what one could look like
 
-  expect(getByText(/learn/i)).toBeInTheDocument();
-});
+// test('renders learn react link', () => {
+//   const { getByText } = render(
+//     <Provider store={store}>
+//       <App />
+//     </Provider>
+//   );
+
+//   expect(getByText(/learn/i)).toBeInTheDocument();
+// });

@@ -1,7 +1,8 @@
 .treeContainer {
     display: flex;
+    /* Uncomment these for fish-eye zoom:
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 
     --tree-spacing-x: 15px; /* the actual space is double this */
     --tree-spacing-y: 5px;
@@ -15,9 +16,8 @@
 }
 
 .tree,
-.tree * {
+.tree .treeElement {
     margin: 0;
-    padding: 0;
     border-color: #F48C06;
 }
 

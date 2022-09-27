@@ -81,7 +81,7 @@ Nodes (`src/features/nodes/Node.js`) can be dragged to move them around, and the
 
 ### Routing based on the URL: React Router
 
-[React Router](https://v5.reactrouter.com/web/guides/quick-start) lets you display different content based on the URL of the page. In Map of Why, users can see specific projects at `https://<base address>/map-of-why/<project Firestore ID>`. For example: https://adambinks.me/map-of-why/#/projects/vGs0J8vUapttyKK701vS
+[React Router](https://v5.reactrouter.com/web/guides/quick-start) lets you display different content based on the URL of the page. In Map of Why, users can see specific projects at `https://<base address>/map-of-why/#/projects/<project Firestore ID>`. For example: https://adambinks.me/map-of-why/#/projects/vGs0J8vUapttyKK701vS
 
 The Routing code is in `src/index.js`.
 

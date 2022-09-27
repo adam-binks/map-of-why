@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectMaxDepth } from '../nodes/nodesSlice';
 import { focussedDepthUpdated } from './navigationSlice';
-import { selectMaxDepth } from '../nodes/nodesSlice'
 import styles from './Scrollbar.module.css';
+
+// Not currently used, maybe useful for debugging
 
 export function Scrollbar() {
     const dispatch = useDispatch()

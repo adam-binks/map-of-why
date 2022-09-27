@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import nodesReducer from '../features/nodes/nodesSlice';
-import navigationReducer from '../features/navigation/navigationSlice';
 import { throttle } from 'lodash';
-import { updateFirebaseProject } from './firebase';
 import initSubscriber from 'redux-subscriber';
+import navigationReducer from '../features/navigation/navigationSlice';
+import nodesReducer from '../features/nodes/nodesSlice';
+import { updateFirebaseProject } from './firebase';
 
 export const store = configureStore({
     reducer: {
@@ -29,5 +29,6 @@ const throttledFirebaseSave = throttle(() => {
 
 const subscribe = initSubscriber(store)
 
+// when changes happen (At most every 5000ms) back up the entire application state to Firebase
 // only save to firebase when nodes changes 
 subscribe('nodes', (state) => {throttledFirebaseSave()})

@@ -11,9 +11,9 @@ Map of Why relies on a number of dependencies (see `package.json` to see which l
 
 ## Set up your development environment
 
-Map of Why uses [Create React App](https://create-react-app.dev/), which provides a very useful local development server. You can start the dev server navigating to your by running `npm run start`. It'll open `http://localhost:3000/map-of-why` in your browser. As you make changes to the code, the site in your browser will automatically hot-reload, which makes it much faster to play around with.
+Map of Why uses [Create React App](https://create-react-app.dev/), which provides a very useful local development server. You can start the dev server navigating to your local copy of the code and running `npm run start`. It'll open `http://localhost:3000/map-of-why` in your browser. As you make changes to the code, the site in your browser will automatically hot-reload, which makes it much faster to play around with.
 
-I'd recommend installing [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) and [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en). These are two Chrome extensions that add extra panes to your browser's developer console - the Components pane lets you see the state of all of the React components in the app, and the Redux extension lets you see and replay the history of Redux actions. In general, the Chrome developer console (F12) is very useful!
+I'd recommend installing [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) and [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en). These are two Chrome extensions that add extra panes to your browser's developer console - the Components pane lets you see the state of all of the React components in the app, and the Redux pane lets you see and replay the history of Redux actions. In general, the Chrome developer console (F12) is very useful!
 
 I use VS Code - it has great [JavaScript support](https://code.visualstudio.com/docs/languages/javascript) - but there are lots of other good editors.
 
@@ -24,13 +24,13 @@ The state of the app is managed using Redux. In `src/app/store.js`, we subscribe
 
 
 ### Set up your own Firestore database
-You have two options: either keep using Firestore (cloud) storage, or store the data locally in the user's browser (see below for more info on this). If you do want to keep using Firestore, please make your own Firebase project rather than using my one!
+You have two options: either keep using Firestore (cloud) storage, or store the data locally in the user's browser (see below for more info on this). If you do want to keep using Firestore, **please make your own Firebase project rather than using my one**!
 
 You can create a Firebase project by following the [Firebase quickstart instructions](https://firebase.google.com/docs/firestore/quickstart). I'd use "Test mode" for the Cloud Firestore security rules. Once you've created the project, it should give you some code to copy-paste into `src/app/firebase.js` - you want to replace my `firebaseConfig` with the config for your project. 
 
 Then test that it's working by going to the [Firebase console](https://console.firebase.google.com/u/0/) then navigating to your project > Build > Firestore database. You should see projects being added to the `projects` collection. You may need to add the "projects" collection first.
 
-Firebase has some usage limits on the free plan, but you shouldn't run into these unless you have lots of users, and then payments are based on usage, starting at just a few pence a month. You can monitor usage in the Firebase console.
+Firebase has some usage limits on the free plan, but you shouldn't run into these unless you have lots of users, and then payments are based on usage, starting at a few pence a month. You can monitor usage in the Firebase console.
 
 ### Option: switching to LocalStorage
 
@@ -53,7 +53,7 @@ Map of Why is a [React](https://reactjs.org/) app. React is very popular, so you
 
 I'd start by reading the [homepage](https://reactjs.org/).
 
-You can then dive into a [hands-on tutorial](https://reactjs.org/tutorial/tutorial.html) where you build a tiny app, if you like.
+You can then dive into a [hands-on tutorial](https://reactjs.org/tutorial/tutorial.html) in which you build a tiny app, if you like.
 
 I'd highly, highly recommend reading all 12 of the [main concepts](https://reactjs.org/docs/hello-world.html) - investing in this understanding will save you lots of headaches later. However note that concept [5. State and Lifestyle](https://reactjs.org/docs/state-and-lifecycle.html) uses old-school class components - Map of Why exclusively uses function components and hooks, which are simpler and more up to date. So you'll want to read the [hooks](https://reactjs.org/docs/hooks-overview.html) intro as well.
 

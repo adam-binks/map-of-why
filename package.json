@@ -1,7 +1,7 @@
 {
   "name": "map-of-why",
   "version": "0.1.0",
-  "homepage": "https://adam-binks.github.io/map-of-why",
+  "homepage": "https://mapofwhy.app",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",

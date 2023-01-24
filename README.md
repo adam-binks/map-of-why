@@ -1,4 +1,4 @@
-# [Map of Why](https://adambinks.me/goal-tracker/)
+# [Map of Why](https://mapofwhy.app/)
 
 Visualise how your daily todo list contributes to your life goals and intrinsic values.
 
